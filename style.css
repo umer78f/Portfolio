@@ -1,0 +1,48 @@
+/* ==========================================================================
+   1. ROOT VARIABLES & FONTS
+   ========================================================================== */
+:root {
+    --arsenic: #141516;
+    --white: #F5F5F0;
+    --gray: rgb(116, 116, 116);
+    --olive-accent: #768559;
+    --header-clip: 0%;
+}
+
+@font-face {
+    font-family: bebas;
+    src: url('/assets/fonts/BebasNeue-Regular.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: interTight;
+    src: url('/assets/fonts/InterTight-VariableFont_wght.ttf');
+    font-display: swap;
+}
+
+/* ==========================================================================
+   2. RESET & BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--arseni);
+    color: var(--white);
+    font-family: interTight;
+    position: relative;
+}
+
+.main {
+    width: 100%;
+    color: var(--arsenic);
+    background-color: var(--white);
+    position: relative;
+}

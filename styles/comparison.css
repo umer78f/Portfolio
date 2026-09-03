@@ -1,0 +1,173 @@
+/* Base Mobile Styles */
+.comparison {
+    width: 100%;
+    min-height: 100vh;
+    max-width: 1440px;
+    padding: 2em 1em;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.vsTitle {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1.5em;
+}
+
+.vsTitle h1 {
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    text-align: center;
+    font-weight: 500;
+    line-height: 1;
+    font-family: bebas, sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.vsTitle h1 span {
+    display: inline-block;
+    will-change: transform;
+}
+
+.comparisonTimeline {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    position: relative;
+}
+
+/* Hide SVG connecting lines on mobile to avoid overlap */
+.svg-container {
+    display: none;
+}
+
+.compLeft,
+.compRight {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.compLeft h2,
+.compRight h2 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin: 0;
+}
+
+.compCards {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.compCardLeft,
+.compCardRight {
+    width: 100%;
+    border-radius: 8px;
+    padding: 1.2em 1em;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+}
+
+.compCardLeft>h3,
+.compCardRight>h3 {
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
+    padding-bottom: 0.4em;
+    margin: 0;
+    font-weight: 600;
+    color: rgb(40, 42, 40);
+}
+
+.compCardLeft>p,
+.compCardRight>p {
+    font-size: clamp(0.9rem, 3vw, 1.05rem);
+    width: 100%;
+    margin: 0 auto;
+    color: #444;
+}
+
+.compCenter {
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 3;
+    margin: 0.5em 0;
+}
+
+/* Tablet & Desktop Layout (>= 768px) */
+@media (min-width: 768px) {
+    .comparison {
+        padding: 2em;
+    }
+
+    .comparisonTimeline {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1em;
+    }
+
+    .svg-container {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .benefits-lines {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .compLeft,
+    .compRight {
+        width: 42%;
+    }
+
+    .compCards {
+        width: 85%;
+        gap: 0.5em;
+    }
+
+    .compCardLeft>p,
+    .compCardRight>p {
+        width: 90%;
+    }
+
+    .compCenter {
+        width: 80px;
+        height: 80px;
+        margin: 0;
+    }
+}

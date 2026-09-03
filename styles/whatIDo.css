@@ -1,0 +1,467 @@
+/* ==========================================================
+   WHAT I DO SECTION - AWWWARDS GRADE
+   ========================================================== */
+
+:root {
+    --bg-glow: rgba(0, 0, 0, 0.03);
+    --card-bg: rgba(18, 18, 20, 0.95);
+    --card-border: rgba(255, 255, 255, 0.12);
+    --pill-bg: rgba(244, 244, 245, 0.85);
+    --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.WhatIDo {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    height: 100dvh;
+    min-height: 680px;
+    max-height: 1200px;
+    background: var(--white, #ffffff);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+    overflow: hidden;
+    position: relative;
+    padding: 2rem;
+    contain: layout style;
+}
+
+/* Ambient Background Glow */
+.WhatIDo::before {
+    content: '';
+    position: absolute;
+    width: 60vw;
+    height: 60vw;
+    max-width: 800px;
+    max-height: 800px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.04) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ==========================================================
+   TOP-LEFT SKILL KEYWORDS (PILLS)
+   ========================================================== */
+
+.WhatIDo .skillKeywords {
+    position: absolute;
+    top: clamp(2rem, 25vh, 14rem);
+    left: clamp(1.5rem, 5vw, 6rem);
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 320px;
+    pointer-events: auto;
+}
+
+.WhatIDo #skillPill {
+    width: fit-content;
+    font-size: clamp(1.3em, 1.7vw, 1.7rem);
+    font-weight: 500;
+    color: #18181b;
+    background: var(--pill-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    padding: 0.45em 0.95em;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    transition: transform 0.4s var(--ease-out-back), background 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+    cursor: pointer;
+    will-change: transform;
+}
+
+#skillPill:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================
+   CENTRAL 3D CYLINDER HEADINGS
+   ========================================================== */
+
+#mainHeadings {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-style: preserve-3d;
+    animation: rotateCylinder 22s linear infinite;
+    animation-play-state: running;
+    z-index: 30;
+    will-change: transform;
+}
+
+#mainHeadings:hover {
+    animation-play-state: paused;
+}
+
+@keyframes rotateCylinder {
+    0% {
+        transform: translate(-50%, -50%) rotateX(0deg) rotateY(-8deg) rotate(18deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotateX(-360deg) rotateY(-8deg) rotate(18deg);
+    }
+}
+
+.WhatIDo #mainHeadings h2 {
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(200px, 22vw, 380px);
+    height: clamp(38px, 4.2vw, 68px);
+    padding: 0;
+    font-size: clamp(0.75rem, 1.2vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    transform: translate(-50%, -50%) rotateX(calc(var(--i) * 30deg)) translateZ(clamp(71px, 7.54vw, 120px));
+    transition: transform 0.4s var(--ease-out-back), border-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+    contain: layout paint;
+    user-select: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.WhatIDo #mainHeadings h2:hover {
+    filter: brightness(1.15);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Dynamic Color Palette Steps */
+#mainHeadings h2:nth-child(1) {
+    background: #1e2025;
+    color: #f2f0e6;
+}
+
+#mainHeadings h2:nth-child(2) {
+    background: #2c3235;
+    color: #f2f0e6;
+}
+
+#mainHeadings h2:nth-child(3) {
+    background: #3a4746;
+    color: #f2f0e6;
+}
+
+#mainHeadings h2:nth-child(4) {
+    background: #4a5e55;
+    color: #f2f0e6;
+}
+
+#mainHeadings h2:nth-child(5) {
+    background: #687e68;
+    color: #ffffff;
+}
+
+#mainHeadings h2:nth-child(6) {
+    background: #8e9c83;
+    color: #121212;
+}
+
+#mainHeadings h2:nth-child(7) {
+    background: #b8b69d;
+    color: #121212;
+}
+
+#mainHeadings h2:nth-child(8) {
+    background: #6e5746;
+    color: #f2f0e6;
+}
+
+#mainHeadings h2:nth-child(9) {
+    background: #5a4236;
+    color: #f2f0e6;
+}
+
+#mainHeadings h2:nth-child(10) {
+    background: #3d2d26;
+    color: #f2f0e6;
+}
+
+#mainHeadings h2:nth-child(11) {
+    background: #3f282b;
+    color: #f2f0e6;
+}
+
+#mainHeadings h2:nth-child(12) {
+    background: #1f1620;
+    color: #f2f0e6;
+}
+
+/* Active Class Highlight */
+.WhatIDo #mainHeadings h2.active-heading {
+    border-color: #ffffff;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.3);
+    filter: brightness(1.25);
+}
+
+/* ==========================================================
+   SKILL NAME (HEADER TITLE)
+   ========================================================== */
+
+.skillName {
+    position: absolute;
+    top: clamp(1.5rem, 4vh, 4rem);
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 5;
+    width: 100%;
+    text-align: center;
+}
+
+.skillName h1 {
+    font-size: clamp(3rem, 10vw, 11rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: #000000;
+    white-space: nowrap;
+    user-select: none;
+    background: linear-gradient(180deg, #000000 0%, #333333 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.95;
+}
+
+/* ==========================================================
+   CORNER SKILL CARDS
+   ========================================================== */
+
+.skillCards {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.skillCard {
+    position: absolute;
+    width: clamp(210px, 18vw, 280px);
+    height: clamp(150px, 10vw, 165px);
+    padding: 1.6rem 1.2rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    pointer-events: auto;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: #f4f4f5;
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: transform 0.4s var(--ease-out-back), border-color 0.3s ease, background-color 0.3s ease;
+    contain: layout paint;
+    z-index: 50;
+    will-change: transform;
+}
+
+.skillCard:hover {
+    background: rgba(32, 32, 36, 0.98);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.skillCard h3 {
+    font-size: clamp(0.95rem, 1.1vw, 1.25rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0;
+}
+
+.skillCard p {
+    color: #a1a1aa;
+    font-size: clamp(0.75rem, 0.85vw, 0.9rem);
+    line-height: 1.5;
+    font-weight: 400;
+    margin: 0;
+}
+
+#skillCard1,
+#skillCard2,
+#skillCard3,
+#skillCard4 {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* Navigation control sidebar */
+.navigator {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+}
+
+.navigator>p {
+    color: #888;
+    font-size: clamp(0.65rem, 1.2vw, 1.4rem);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.navigator>p:hover {
+    color: #000;
+}
+
+@media (max-width: 860px) {
+
+    /* Main container flow */
+    .WhatIDo {
+        height: auto;
+        min-height: 100dvh;
+        max-height: none;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 2rem 1rem 3rem 1rem;
+        overflow-y: auto;
+    }
+
+    /* 1. TOP: SKILL NAME */
+    .skillName {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        margin-top: 0.5rem;
+        margin-bottom: 1.25rem;
+        order: 1;
+    }
+
+    .skillName h1 {
+        font-size: clamp(2.5rem, 11vw, 4.5rem);
+    }
+
+    /* 2. SECOND: SKILL PILLS (HORIZONTAL ROW) */
+    .WhatIDo .skillKeywords {
+        position: relative;
+        top: auto;
+        left: auto;
+        max-width: 100%;
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 0.25rem 0.5rem 0.75rem;
+        gap: 0.5rem;
+        order: 2;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        /* Hide scrollbar Firefox */
+    }
+
+    .WhatIDo .skillKeywords::-webkit-scrollbar {
+        display: none;
+        /* Hide scrollbar Chrome/Safari */
+    }
+
+    .WhatIDo #skillPill {
+        font-size: 0.85rem;
+        padding: 0.4em 0.8em;
+        flex-shrink: 0;
+    }
+
+    /* 3. THIRD: CENTRAL 3D CYLINDER */
+    #mainHeadings {
+        position: relative;
+        top: auto;
+        left: auto;
+        order: 3;
+        /* Vertical margins create spacing for 3D depth rotation */
+        margin: 6.5rem auto 7.5rem auto;
+    }
+
+    @keyframes rotateCylinder {
+        0% {
+            transform: rotateX(0deg) rotateY(-8deg) rotate(10deg);
+        }
+
+        100% {
+            transform: rotateX(-360deg) rotateY(-8deg) rotate(10deg);
+        }
+    }
+
+    .WhatIDo #mainHeadings h2 {
+        width: 220px;
+        height: 44px;
+        font-size: 0.85rem;
+        transform: translate(-50%, -50%) rotateX(calc(var(--i) * 30deg)) translateZ(80px);
+    }
+
+    /* 4. BOTTOM: STACKED SKILL CARDS */
+    .skillCards {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        order: 4;
+        z-index: 50;
+    }
+
+    .skillCard,
+    #skillCard1,
+    #skillCard2,
+    #skillCard3,
+    #skillCard4 {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+    }
+
+    /* Hide sidebar navigator on mobile screens */
+    .navigator {
+        display: none;
+    }
+}

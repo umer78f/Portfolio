@@ -1,0 +1,190 @@
+/* ==========================================================================
+   WHY ME SECTION - COMPLETE RESPONSIVE & MIX-BLEND-MODE STYLES
+   ========================================================================== */
+
+.whyMe {
+    width: 100%;
+    height: 100vh;
+    max-width: 1440px;
+    padding: 2em;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    /* Explicit background color is required for difference blending to resolve to black */
+    background-color: var(--white);
+    isolation: isolate; /* Creates a clean root stacking context for CSS blending */
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Animated Title Styles
+   -------------------------------------------------------------------------- */
+
+.title {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 5; /* Higher than images so it blends on top of them */
+}
+
+.title::-webkit-scrollbar {
+    display: none;
+}
+
+.title h1 {
+    font-size: clamp(2.5rem, 12vw, 6rem);
+    text-align: center;
+    font-weight: 500;
+    font-family: bebas, sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+    mix-blend-mode: difference;
+}
+
+/* --------------------------------------------------------------------------
+   2. Opening Paragraph Styles
+   -------------------------------------------------------------------------- */
+
+.openingText {
+    max-width: 900px;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 5; /* Higher than images so it blends on top of them */
+    pointer-events: none;
+}
+
+.openingText p {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+    margin: 0;
+    color: black;
+    mix-blend-mode: difference;
+}
+
+.animText span {
+    display: inline-block;
+}
+
+/* --------------------------------------------------------------------------
+   3. Floating Images & Overlays
+   -------------------------------------------------------------------------- */
+
+.whyLeftImg,
+.whyRightImg {
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    border-radius: 6px;
+    overflow: hidden;
+    /* CHANGED: opacity now starts here as a static value instead of being
+       set from JS; the animation only tweens it up to 1 */
+    opacity: 0.5;
+}
+
+/* Left Image Final Resting Position & Layering */
+.whyLeftImg {
+    left: 10%;
+    /* CHANGED: this is now the FINAL position. JS animates a `y` transform
+       from off-screen down to 0, so this bottom value is never touched
+       during scroll — no layout recalculation on every scrub tick. */
+    bottom: 20%;
+    z-index: 2; /* Below text layers (z-index: 5) */
+}
+
+/* Right Image Final Resting Position & Layering */
+.whyRightImg {
+    right: 15%;
+    /* CHANGED: final position, same reasoning as .whyLeftImg above */
+    bottom: 50%;
+    z-index: 2; /* Below text layers (z-index: 5) */
+}
+
+/* Gradient Overlay - Left Image */
+.whyLeftImg::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, white 2%, rgba(0, 0, 0, 0.301) 100%);
+    pointer-events: none;
+}
+
+/* Gradient Overlay - Right Image */
+.whyRightImg::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, white 2%, rgba(0, 0, 0, 0.301) 80%);
+    pointer-events: none;
+}
+
+.whyLeftImg img,
+.whyRightImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --------------------------------------------------------------------------
+   4. Responsive Media Queries
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 920px) {
+    .openingText p {
+        font-size: 5vw;
+        margin-top: 2vw;
+    }
+
+    .whyLeftImg,
+    .whyRightImg {
+        width: 160px;
+        height: 240px;
+    }
+
+    .whyLeftImg {
+        left: 5%;
+    }
+
+    .whyRightImg {
+        right: 5%;
+    }
+}
+
+@media (max-width: 600px) {
+    .whyMe {
+        padding: 1em;
+    }
+
+    .openingText {
+        width: 92%;
+        top: 45%;
+    }
+
+    .openingText p {
+        font-size: 7.5vw;
+        margin-top: 2vw;
+    }
+
+    /* Resize & pull images to screen edges for mobile view */
+    .whyLeftImg,
+    .whyRightImg {
+        width: 120px;
+        height: 180px;
+    }
+
+    .whyLeftImg {
+        left: 2%;
+    }
+
+    .whyRightImg {
+        right: 2%;
+    }
+}
