@@ -13,12 +13,38 @@
     font-family: bebas;
     src: url('/assets/fonts/BebasNeue-Regular.woff2') format('woff2');
     font-display: swap;
+    size-adjust: 100%;
+    ascent-override: 90%;
+    descent-override: 30%;
+    line-gap-override: 0%;
+}
+
+@font-face {
+    font-family: bebas-fallback;
+    src: local('Arial Narrow'), local('Arial');
+    size-adjust: 81.35%;
+    ascent-override: 90%;
+    descent-override: 30%;
+    line-gap-override: 0%;
 }
 
 @font-face {
     font-family: interTight;
     src: url('/assets/fonts/InterTight-VariableFont_wght.woff2') format('woff2');
     font-display: swap;
+    size-adjust: 100%;
+    ascent-override: 96.875%;
+    descent-override: 24.121%;
+    line-gap-override: 0%;
+}
+
+@font-face {
+    font-family: interTight-fallback;
+    src: local('Arial');
+    size-adjust: 105.28%;
+    ascent-override: 96.875%;
+    descent-override: 24.121%;
+    line-gap-override: 0%;
 }
 
 /* ==========================================================================
@@ -36,7 +62,7 @@ body {
     height: 100%;
     background-color: var(--arseni);
     color: var(--white);
-    font-family: interTight;
+    font-family: interTight, interTight-fallback, sans-serif;
     position: relative;
 }
 

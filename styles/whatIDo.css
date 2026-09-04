@@ -317,7 +317,8 @@
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-.skillCard h3 {
+.skillCard h3,
+.skillCard .skill-card-title {
     font-size: clamp(0.95rem, 1.1vw, 1.25rem);
     font-weight: 600;
     letter-spacing: -0.02em;

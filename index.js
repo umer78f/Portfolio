@@ -39,7 +39,7 @@ function WhatIDo() {
     const cardEls = [1, 2, 3, 4].map((i) => {
         const el = document.getElementById(`skillCard${i}`);
         return el
-            ? { el, h3: el.querySelector('h3'), p: el.querySelector('p') }
+            ? { el, h3: el.querySelector('.skill-card-title'), p: el.querySelector('p') }
             : null;
     });
 

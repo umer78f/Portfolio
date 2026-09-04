@@ -135,7 +135,7 @@ header {
 .headerBtm h1 {
     text-align: center;
     font-size: clamp(4vh, 8vw, 8rem);
-    font-family: interTight;
+    font-family: interTight, interTight-fallback, sans-serif;
     line-height: 0.85;
     color: var(--gray);
     margin: 0;
