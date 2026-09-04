@@ -1,11 +1,21 @@
 let locomotiveScroll;
+let scrollUpdateFrame;
+let resizeFrame;
+
+function requestScrollUpdate() {
+    if (scrollUpdateFrame) return;
+    scrollUpdateFrame = requestAnimationFrame(() => {
+        scrollUpdateFrame = 0;
+        ScrollTrigger.update();
+    });
+}
 
 function initializeSite() {
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.config({ ignoreMobileResize: true });
 
     locomotiveScroll = new LocomotiveScroll({
-        scrollCallback: () => ScrollTrigger.update()
+        scrollCallback: requestScrollUpdate
     });
 
     h1Animation();
@@ -633,10 +643,12 @@ let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-        if (locomotiveScroll) {
+        if (!locomotiveScroll || resizeFrame) return;
+        resizeFrame = requestAnimationFrame(() => {
+            resizeFrame = 0;
             locomotiveScroll.resize();
             ScrollTrigger.refresh();
-        }
+        });
     }, 200);
 });
 
