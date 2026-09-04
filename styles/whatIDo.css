@@ -142,7 +142,7 @@
     transform-style: preserve-3d;
     backface-visibility: visible;
     transform: translate(-50%, -50%) rotateX(calc(var(--i) * 30deg)) translateZ(clamp(71px, 7.54vw, 120px));
-    transition: transform 0.4s var(--ease-out-back), border-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    transition: transform 0.4s var(--ease-out-back), filter 0.3s ease;
     cursor: pointer;
     contain: layout paint;
     user-select: none;
@@ -152,9 +152,25 @@
     justify-content: center;
 }
 
+.WhatIDo #mainHeadings h2::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: inherit;
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0), inset 0 0 0 rgba(255, 255, 255, 0);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
 .WhatIDo #mainHeadings h2:hover {
     filter: brightness(1.15);
+}
+
+.WhatIDo #mainHeadings h2:hover::after {
     border-color: rgba(255, 255, 255, 0.6);
+    opacity: 1;
 }
 
 /* Dynamic Color Palette Steps */
@@ -220,9 +236,13 @@
 
 /* Active Class Highlight */
 .WhatIDo #mainHeadings h2.active-heading {
+    filter: brightness(1.25);
+}
+
+.WhatIDo #mainHeadings h2.active-heading::after {
     border-color: #ffffff;
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.3);
-    filter: brightness(1.25);
+    opacity: 1;
 }
 
 /* ==========================================================

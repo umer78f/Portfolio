@@ -11,12 +11,16 @@ function initializeSite() {
     h1Animation();
     headerAnimation();
     heroAnimation();
-    whyMeAnimation();
-    whatIDoAnimation();
-    comparisonAnimation();
-    workAnimation();
-    footerAnimation();
-    ScrollTrigger.refresh();
+
+    const scheduleDeferredAnimations = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 0));
+    scheduleDeferredAnimations(() => {
+        whyMeAnimation();
+        whatIDoAnimation();
+        comparisonAnimation();
+        workAnimation();
+        footerAnimation();
+        ScrollTrigger.refresh();
+    });
 }
 
 function h1Animation() {
@@ -277,22 +281,20 @@ function drawConnectingLines() {
     if (!svg || !center) return [];
 
     const svgBox = svg.getBoundingClientRect();
+    const leftCards = [...document.querySelectorAll(".compCardLeft")];
+    const rightCards = [...document.querySelectorAll(".compCardRight")];
+    const elementBoxes = new Map([center, ...leftCards, ...rightCards].map((element) => [
+        element,
+        element.getBoundingClientRect()
+    ]));
 
-    svg.setAttribute(
-        "viewBox",
-        `0 0 ${svgBox.width} ${svgBox.height}`
-    );
-
-    svg.innerHTML = "";
-
-    function getPoint(element, side) {
-        const box = element.getBoundingClientRect();
-
+    const getPoint = (element, side) => {
+        const box = elementBoxes.get(element);
         return {
             x: (side === "left" ? box.left : box.right) - svgBox.left,
             y: box.top + box.height / 2 - svgBox.top
         };
-    }
+    };
 
     function createLine(start, end) {
         const curve = (end.x - start.x) / 2;
@@ -320,39 +322,28 @@ function drawConnectingLines() {
         return path;
     }
 
-    const leftCards = document.querySelectorAll(".compCardLeft");
-    const rightCards = document.querySelectorAll(".compCardRight");
-
     const centerLeft = getPoint(center, "left");
     const centerRight = getPoint(center, "right");
 
     const lines = [];
 
-    const maxPairs = Math.max(
-        leftCards.length,
-        rightCards.length
-    );
+    const maxPairs = Math.max(leftCards.length, rightCards.length);
+
+    const linePoints = [];
 
     for (let i = 0; i < maxPairs; i++) {
-
         if (leftCards[i]) {
-            lines.push(
-                createLine(
-                    centerLeft,
-                    getPoint(leftCards[i], "right")
-                )
-            );
+            linePoints.push([centerLeft, getPoint(leftCards[i], "right")]);
         }
 
         if (rightCards[i]) {
-            lines.push(
-                createLine(
-                    centerRight,
-                    getPoint(rightCards[i], "left")
-                )
-            );
+            linePoints.push([centerRight, getPoint(rightCards[i], "left")]);
         }
     }
+
+    svg.setAttribute("viewBox", `0 0 ${svgBox.width} ${svgBox.height}`);
+    svg.innerHTML = "";
+    linePoints.forEach(([start, end]) => lines.push(createLine(start, end)));
 
     return lines;
 }
