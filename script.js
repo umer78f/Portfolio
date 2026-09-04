@@ -166,8 +166,6 @@ function whyMeAnimation() {
     const headerBtmH1 = document.querySelector('.headerBtm h1');
     if (headerBtmH1) headerBtmH1.classList.remove('animText');
 
-    gsap.set(".title", { perspective: 1000 });
-
     const animTextSpans = gsap.utils.toArray(".whyMe .animText span span");
 
 
@@ -183,10 +181,10 @@ function whyMeAnimation() {
         scrollTrigger: {
             trigger: ".whyMe",
             start: "top top",
-            end: "+=2500", // CHANGED: fixed missing "=" (was "+2500", invalid relative syntax)
+            end: "+=2000", // CHANGED: fixed missing "=" (was "+2500", invalid relative syntax)
             pin: true,
-            scrub: 1,
-            anticipatePin: 0.1,
+            scrub: 0.5,
+            anticipatePin: 0.5,
             onEnter: () => gsap.set(willChangeTargets, { willChange: "transform, opacity" }),
             onLeave: () => gsap.set(willChangeTargets, { willChange: "auto" }),
             onEnterBack: () => gsap.set(willChangeTargets, { willChange: "transform, opacity" }),
@@ -206,7 +204,7 @@ function whyMeAnimation() {
     tl.to('.whyLeftImg', {
         opacity: 1,
         y: 0,
-        duration: 8, // Extended duration so movement continues past text end
+        duration: 4, // Extended duration so movement continues past text end
         ease: "power1.out" // Gives a smooth pushing momentum
     }, '1')
         .to('.whyRightImg', {
