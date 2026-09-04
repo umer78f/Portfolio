@@ -209,5 +209,7 @@ function WhatIDo() {
         updateSkillView(0, firstHeading, true);
     }
 }
-updatePakistanTime();
-WhatIDo() 
+window.addEventListener("portfolio:ready", () => {
+    updatePakistanTime();
+    WhatIDo();
+}, { once: true });

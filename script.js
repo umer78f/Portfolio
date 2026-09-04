@@ -1,8 +1,23 @@
-ScrollTrigger.config({ ignoreMobileResize: true });
+let locomotiveScroll;
 
-const locomotiveScroll = new LocomotiveScroll({
-    scrollCallback: () => ScrollTrigger.update()
-});
+function initializeSite() {
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    locomotiveScroll = new LocomotiveScroll({
+        scrollCallback: () => ScrollTrigger.update()
+    });
+
+    h1Animation();
+    headerAnimation();
+    heroAnimation();
+    whyMeAnimation();
+    whatIDoAnimation();
+    comparisonAnimation();
+    workAnimation();
+    footerAnimation();
+    ScrollTrigger.refresh();
+}
 
 function h1Animation() {
     const paragraphs = document.querySelectorAll('.animText, .animWrapper');
@@ -621,30 +636,22 @@ function footerAnimation() {
         },
     });
 }
-document.addEventListener("DOMContentLoaded", () => {
-
-    h1Animation();
-    headerAnimation();
-    heroAnimation();
-    whyMeAnimation();
-    whatIDoAnimation();
-    comparisonAnimation();
-    workAnimation();
-    footerAnimation()
-    ScrollTrigger.refresh();
-
-});
+window.addEventListener("portfolio:ready", initializeSite, { once: true });
 
 let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-        locomotiveScroll.resize();
-        ScrollTrigger.refresh();
+        if (locomotiveScroll) {
+            locomotiveScroll.resize();
+            ScrollTrigger.refresh();
+        }
     }, 200);
 });
 
 window.addEventListener("load", () => {
-    locomotiveScroll.resize();
-    ScrollTrigger.refresh();
+    if (locomotiveScroll) {
+        locomotiveScroll.resize();
+        ScrollTrigger.refresh();
+    }
 });
