@@ -11,7 +11,7 @@ header {
 }
 
 .logo {
-    font-size: clamp(3vh, 5vw, 3rem);
+    font-size: clamp(3vh, 4vw, 2rem);
     font-weight: bold;
 }
 
