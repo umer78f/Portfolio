@@ -7,7 +7,7 @@
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const startedAt = performance.now();
-    const minimumDisplayTime = 700;
+    const minimumDisplayTime = 2000;
     const maximumWaitTime = 15000;
     const stalledAfter = 5000;
     const tasks = [];
