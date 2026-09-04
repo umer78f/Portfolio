@@ -34,6 +34,12 @@
     text-align: center;
 }
 
+@media (min-width: 861px) {
+    .heroTitle {
+        min-height: calc(clamp(2rem, 10vw, 7rem) * 2.4 + 2em);
+    }
+}
+
 .h1Wrapper {
     overflow: hidden;
 }
