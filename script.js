@@ -58,6 +58,11 @@ function initializeSite() {
             const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 0));
             schedule(() => {
                 deferredAnimations[index]();
+                if (index === deferredAnimations.length - 1) {
+                    ScrollTrigger.refresh();
+                    locomotiveScroll.lenisInstance?.resize();
+                    return;
+                }
                 scheduleNext(index + 1);
             }, { timeout: 1000 });
         }, 0);
@@ -687,7 +692,7 @@ window.addEventListener('resize', () => {
         if (!locomotiveScroll || resizeFrame) return;
         resizeFrame = requestAnimationFrame(() => {
             resizeFrame = 0;
-            locomotiveScroll.resize();
+            locomotiveScroll.lenisInstance?.resize();
             ScrollTrigger.refresh();
         });
     }, 200);
@@ -695,7 +700,7 @@ window.addEventListener('resize', () => {
 
 window.addEventListener("load", () => {
     if (locomotiveScroll) {
-        locomotiveScroll.resize();
+        locomotiveScroll.lenisInstance?.resize();
         ScrollTrigger.refresh();
     }
 });
