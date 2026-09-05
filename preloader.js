@@ -61,30 +61,6 @@
         check();
     }));
     addTask(new Promise((resolve) => {
-        if (window.ScrollTrigger) {
-            resolve();
-            return;
-        }
-        const started = performance.now();
-        const check = () => {
-            if (window.ScrollTrigger || performance.now() - started > maximumWaitTime) resolve();
-            else window.setTimeout(check, 40);
-        };
-        check();
-    }));
-    addTask(new Promise((resolve) => {
-        if (window.LocomotiveScroll) {
-            resolve();
-            return;
-        }
-        const started = performance.now();
-        const check = () => {
-            if (window.LocomotiveScroll || performance.now() - started > maximumWaitTime) resolve();
-            else window.setTimeout(check, 40);
-        };
-        check();
-    }));
-    addTask(new Promise((resolve) => {
         if (document.readyState === 'complete') resolve();
         else window.addEventListener('load', resolve, { once: true });
     }));

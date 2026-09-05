@@ -10,7 +10,26 @@ function requestScrollUpdate() {
     });
 }
 
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
 function initializeSite() {
+    const libraries = [];
+    if (!window.ScrollTrigger) libraries.push(loadScript('assets/vendor/ScrollTrigger.min.js'));
+    if (!window.LocomotiveScroll) libraries.push(loadScript('assets/vendor/locomotive-scroll.min.js'));
+
+    if (libraries.length) {
+        Promise.all(libraries).then(initializeSite).catch(() => undefined);
+        return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.config({ ignoreMobileResize: true });
 
@@ -655,7 +674,11 @@ function footerAnimation() {
         },
     });
 }
-window.addEventListener("portfolio:ready", initializeSite, { once: true });
+window.addEventListener("portfolio:ready", () => {
+    const start = () => initializeSite();
+    const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 0));
+    schedule(start, { timeout: 1500 });
+}, { once: true });
 
 let resizeTimeout;
 window.addEventListener('resize', () => {
