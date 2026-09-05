@@ -22,15 +22,28 @@ function initializeSite() {
     headerAnimation();
     heroAnimation();
 
-    const scheduleDeferredAnimations = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 0));
-    scheduleDeferredAnimations(() => {
-        whyMeAnimation();
-        whatIDoAnimation();
-        comparisonAnimation();
-        workAnimation();
-        footerAnimation();
-        ScrollTrigger.refresh();
-    });
+    const deferredAnimations = [
+        whyMeAnimation,
+        whatIDoAnimation,
+        comparisonAnimation,
+        workAnimation,
+        footerAnimation
+    ];
+    const scheduleNext = (index) => {
+        if (index >= deferredAnimations.length) {
+            ScrollTrigger.refresh();
+            return;
+        }
+
+        window.setTimeout(() => {
+            const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 0));
+            schedule(() => {
+                deferredAnimations[index]();
+                scheduleNext(index + 1);
+            }, { timeout: 1000 });
+        }, 0);
+    };
+    scheduleNext(0);
 }
 
 function h1Animation() {
@@ -475,19 +488,24 @@ function comparisonAnimation() {
 
         // Batch animate cards as they enter viewport while scrolling
         const allCards = gsap.utils.toArray(".compCardLeft, .compCardRight");
+        gsap.set(allCards, { opacity: 0, y: 30 });
 
-        allCards.forEach((card) => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 88%",
-                    toggleActions: "play none none reverse"
-                },
+        ScrollTrigger.batch(allCards, {
+            start: "top 88%",
+            onEnter: (cards) => gsap.to(cards, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: "power2.out",
+                overwrite: true
+            }),
+            onLeaveBack: (cards) => gsap.to(cards, {
                 opacity: 0,
                 y: 30,
                 duration: 0.6,
-                ease: "power2.out"
-            });
+                ease: "power2.out",
+                overwrite: true
+            })
         });
     });
 }
