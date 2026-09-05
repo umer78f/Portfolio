@@ -207,16 +207,25 @@
     display: flex;
     align-items: baseline;
     gap: 0.75em;
-    padding: 1.25em 0.5em;
+    padding: 1.25em 1em;
     border-bottom: 1px solid var(--line);
     cursor: pointer;
-    transition: padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease;
+    transition: background-color 0.35s ease;
 }
 
 .proName:hover,
 .proName.active {
-    padding-left: 1em;
     background-color: rgba(10, 10, 10, 0.04);
+}
+
+.proName h1 {
+    transform: translateX(-0.5em);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.proName:hover h1,
+.proName.active h1 {
+    transform: translateX(0);
 }
 
 .proName h1:nth-child(1) {
@@ -226,7 +235,7 @@
     margin: 0;
     line-height: 1;
     font-variant-numeric: tabular-nums;
-    transition: color 0.35s ease;
+    transition: color 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .proName.active h1:nth-child(1),
