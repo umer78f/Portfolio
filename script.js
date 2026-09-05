@@ -20,70 +20,6 @@ function loadScript(src) {
     });
 }
 
-function waitForGeometryAssets() {
-    const media = [...document.querySelectorAll('.whyMe img, .comparison img, .work img, .work video')];
-    const ready = media.map((element) => {
-        if (element instanceof HTMLImageElement) {
-            if (element.complete) return element.decode?.().catch(() => undefined);
-            return new Promise((resolve) => {
-                element.addEventListener('load', resolve, { once: true });
-                element.addEventListener('error', resolve, { once: true });
-            });
-        }
-
-        if (element.readyState >= 1) return Promise.resolve();
-        return new Promise((resolve) => {
-            element.addEventListener('loadedmetadata', resolve, { once: true });
-            element.addEventListener('error', resolve, { once: true });
-        });
-    });
-
-    return Promise.race([
-        Promise.all(ready),
-        new Promise((resolve) => window.setTimeout(resolve, 1500))
-    ]);
-}
-
-function observeDeferredAnimations(animations) {
-    const pending = new Set();
-    let refreshScheduled = false;
-    let refreshCompleted = false;
-
-    const refreshOnceWhenStable = () => {
-        if (refreshScheduled || refreshCompleted) return;
-        refreshScheduled = true;
-        waitForGeometryAssets().then(() => {
-            window.requestAnimationFrame(() => {
-                ScrollTrigger.refresh();
-                locomotiveScroll.lenisInstance?.resize();
-                refreshCompleted = true;
-            });
-        });
-    };
-
-    const flush = () => {
-        pending.forEach((animation) => animation());
-        pending.clear();
-        refreshOnceWhenStable();
-    };
-
-    const scheduleFlush = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 0));
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            const animation = animations.find(({ section }) => entry.target === section)?.animation;
-            if (!animation || !entry.isIntersecting) return;
-            pending.add(animation);
-            observer.unobserve(entry.target);
-        });
-
-        if (pending.size) scheduleFlush(flush, { timeout: 1000 });
-    }, { rootMargin: '1200px 0px' });
-
-    animations.forEach(({ section }) => {
-        if (section) observer.observe(section);
-    });
-}
-
 function initializeSite() {
     const libraries = [];
     if (!window.ScrollTrigger) libraries.push(loadScript('assets/vendor/ScrollTrigger.min.js'));
@@ -105,13 +41,33 @@ function initializeSite() {
     headerAnimation();
     heroAnimation();
 
-    observeDeferredAnimations([
-        { section: document.querySelector('.whyMe'), animation: whyMeAnimation },
-        { section: document.querySelector('.WhatIDo'), animation: whatIDoAnimation },
-        { section: document.querySelector('.comparison'), animation: comparisonAnimation },
-        { section: document.querySelector('.work'), animation: workAnimation },
-        { section: document.querySelector('footer'), animation: footerAnimation }
-    ]);
+    const deferredAnimations = [
+        whyMeAnimation,
+        whatIDoAnimation,
+        comparisonAnimation,
+        workAnimation,
+        footerAnimation
+    ];
+    const scheduleNext = (index) => {
+        if (index >= deferredAnimations.length) {
+            ScrollTrigger.refresh();
+            return;
+        }
+
+        window.setTimeout(() => {
+            const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 0));
+            schedule(() => {
+                deferredAnimations[index]();
+                if (index === deferredAnimations.length - 1) {
+                    ScrollTrigger.refresh();
+                    locomotiveScroll.lenisInstance?.resize();
+                    return;
+                }
+                scheduleNext(index + 1);
+            }, { timeout: 1000 });
+        }, 0);
+    };
+    scheduleNext(0);
 }
 
 function h1Animation() {
@@ -740,4 +696,11 @@ window.addEventListener('resize', () => {
             ScrollTrigger.refresh();
         });
     }, 200);
+});
+
+window.addEventListener("load", () => {
+    if (locomotiveScroll) {
+        locomotiveScroll.lenisInstance?.resize();
+        ScrollTrigger.refresh();
+    }
 });
