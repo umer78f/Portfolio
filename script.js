@@ -46,7 +46,6 @@ function h1Animation() {
 
 //------------------------------------------------------------------------------------------------
 
-
 function headerAnimation() {
     const closeBtn = document.querySelector('.closeBtn');
     const openBtn = document.querySelector('.bar');

@@ -57,7 +57,15 @@
     z-index: -1;
     transition: height 0.4s ease;
 }
-
+.contactLinks a:nth-child(1)::after{
+    background-color: #305CDE;
+}
+.contactLinks a:nth-child(2)::after{
+    background-color: #00C68D;
+}
+.contactLinks a:nth-child(3)::after{
+    background-color: #305CDE;
+}
 .contactLinks a:hover {
     color: white;
 }
