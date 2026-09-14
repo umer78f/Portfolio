@@ -1,0 +1,327 @@
+.expertiese {
+    width: 100%;
+    max-width: 1440px;
+    height: 100lvh;
+    margin: auto auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.expertiseTitle {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    height: fit-content;
+    margin: 2em 0 2em;
+}
+
+.expertiseTitle>h1 {
+    font-size: clamp(3.5rem, 18vw, 8rem);
+    text-align: center;
+    font-weight: 500;
+    font-family: bebas, sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+    mix-blend-mode: difference;
+    color: white;
+}
+
+.expertiseTitle h1 span {
+    display: inline-block;
+    transform: translateY(120%);
+}
+
+/*cards-------------------------------------*/
+
+.expertCards {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.expertCard {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.expertCard #left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(50% + 1px);
+    height: 100%;
+    padding: 2.8em;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.expertCard #right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(50% + 1px);
+    height: 100%;
+    padding: 2.8em;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+#expertCard4 {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.9);
+    transform-origin: bottom;
+
+    &>#left {
+        background-color: #FF6B5B;
+        transform-origin: left;
+    }
+
+    &>#right {
+        background-color: #FF6B5B;
+        transform-origin: right;
+    }
+}
+
+#expertCard3 {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.85);
+    transform-origin: bottom;
+
+    &>#left {
+        background-color: var(--white);
+        transform-origin: left;
+        color: black;
+    }
+
+    &>#right {
+        background-color: var(--white);
+        transform-origin: right;
+    }
+}
+
+#expertCard2 {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.80);
+    transform-origin: bottom;
+
+    &>#left {
+        background-color: #00C68D;
+        transform-origin: left;
+
+    }
+
+    &>#right {
+        background-color: #00C68D;
+        transform-origin: right;
+    }
+}
+
+#expertCard1 {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.75);
+    transform-origin: bottom;
+
+    &>#left {
+        background-color: #305CDE;
+        transform-origin: left;
+    }
+
+    &>#right {
+        background-color: #305CDE;
+        transform-origin: right;
+    }
+}
+
+
+/* left half ------------------- */
+
+.cardTop {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeading {
+    font-family: interTight;
+    font-size: clamp(4.5rem, 8vw, 7rem);
+    line-height: 0.8;
+    font-weight: 500;
+    margin: 0 0 0.35em;
+}
+
+.cardDesc {
+    font-family: interTight;
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    line-height: 1.15;
+    font-weight: 400;
+    max-width: 11em;
+    margin: 0;
+    letter-spacing: 0.005em;
+    color: color-mix(in srgb, var(--white) 65%, transparent);
+}
+
+.cardTags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.7em;
+    margin-top: 1.6em;
+}
+
+.cardTags .tag {
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.85em 1.5em;
+    border: 1px solid color-mix(in srgb, var(--white) 35%, transparent);
+    border-radius: 999px;
+    white-space: nowrap;
+    color: color-mix(in srgb, var(--white) 90%, transparent);
+}
+
+/* right half ------------------- */
+
+.cardNumber {
+    font-family: interTight;
+    font-size: clamp(8rem, 17vw, 16rem);
+    line-height: 0.7;
+    display: block;
+    text-align: right;
+    color: transparent;
+    margin: 0;
+    -webkit-text-stroke: 1.5px rgb(214, 213, 213);
+}
+
+.mblCardNmbr {
+    font-size: clamp(8rem, 18vw, 8rem);
+    -webkit-text-stroke: 1.5px rgb(214, 213, 213);
+    color: transparent;
+    width: 100%;
+    text-align: center;
+    display: none;
+    transform: scaleX(1.7);
+}
+
+
+.cardPoints, .cardPointsMbl {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+    margin-top: 1.16em;
+}
+
+.cardPoints li, .cardPointsMbl li {
+    font-family: interTight;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 0.95;
+    font-weight: 400;
+    transform: scaleY(0.92);
+    transform-origin: right;
+    letter-spacing: 0.005em;
+    color: color-mix(in srgb, var(--white) 65%, transparent);
+    margin-bottom: 0.2em;
+}
+.cardPointsMbl{
+    display: none;
+    margin-top: 3em;
+}
+
+.cardRight {
+    height: 100%;
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#expertCard3 #left,
+#expertCard3 #right,
+#expertCard3 li,
+#expertCard3 p,
+#expertCard3 .tag {
+    color: var(--arsenic) !important;
+    border-color: var(--arsenic);
+}
+
+@media (max-width:760px) {
+    .cardHeading {
+        font-size: clamp(4rem, 6vw, 5rem);
+        margin-bottom: 1em;
+    }
+
+    .cardDesc {
+        font-size: clamp(1.2rem, 3vw, 2.6rem);
+    }
+
+    .cardTags .tag {
+        padding: 7px 10px;
+    }
+
+    .expertCard #right {
+        justify-content: space-between;
+    }
+
+    .cardRight {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+    }
+}
+
+@media (max-width:600px) {
+    .expertCard #right {
+        display: none;
+    }
+    .mblCardNmbr, .cardPointsMbl{
+        display: block;
+    }
+    .cardPointsMbl{
+        margin-top: 16px;
+    }
+    .cardDesc p{
+        width: 100%;
+        margin-top: 16px;
+    }
+    .expertCard{
+        border-radius: 0;
+    }
+
+    .expertCard #left {
+        padding: 1.5em;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .cardTags{
+        margin-top: 16px;
+    }
+    .cardTags .tag{
+        font-size: 0.6em;
+    }
+    .cardHeading{
+        line-height: 1;
+        margin-bottom: 0.5em;
+    }
+
+    #expertCard1,
+    #expertCard2,
+    #expertCard3,
+    #expertCard4 {
+        transform: scale(1);
+    }
+}

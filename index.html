@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/assets/images/favicon.png">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"
+        integrity="sha512-oJ8QbaQThQoJZ7oEv+29jfPM6CcP+zUxh3PKJs1vyOhx0UraUrE7PQgeItu3dOuCJyrzWpoYMsVjkkPEBzbUqw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"
+        integrity="sha512-OaIE7ud4P04EhnBuhEcm0wQSceIxbi2pV03oBLS/+F6ampfxsnxcIxOp7H2eF9G7N0kEht0VAzOLG+dTLSo17Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
+    <link rel="stylesheet" href="styles/skill.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/hero.css">
+    <link rel="stylesheet" href="styles/contact.css">
+    <link rel="stylesheet" href="styles/work.css">
+    <link rel="stylesheet" href="styles/whyMe.css">
+    <link rel="stylesheet" href="styles/expertise.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <title>Umar.</title>
+
+
+</head>
+
+<body>
+    <header>
+        <div class="navHeader">
+            <div class="logoContainer">
+                <h4 class="logo">UF.</h4>
+            </div>
+            <div class="socials">
+                <div class="fb">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M13 9H17.5L17 11H13V20H11V11H7V9H11V7.12777C11 5.34473 11.1857 4.69816 11.5343 4.04631C11.8829 3.39446 12.3945 2.88288 13.0463 2.53427C13.6982 2.18565 14.3447 2 16.1278 2C16.6498 2 17.1072 2.05 17.5 2.15V4H16.1278C14.8041 4 14.401 4.07784 13.9895 4.29789C13.6862 4.46011 13.4601 4.68619 13.2979 4.98951C13.0778 5.40096 13 5.80407 13 7.12777V9Z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="whatsapp">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path
+                            d="M7.25361 18.4944L7.97834 18.917C9.18909 19.623 10.5651 20 12.001 20C16.4193 20 20.001 16.4183 20.001 12C20.001 7.58172 16.4193 4 12.001 4C7.5827 4 4.00098 7.58172 4.00098 12C4.00098 13.4363 4.37821 14.8128 5.08466 16.0238L5.50704 16.7478L4.85355 19.1494L7.25361 18.4944ZM2.00516 22L3.35712 17.0315C2.49494 15.5536 2.00098 13.8345 2.00098 12C2.00098 6.47715 6.47813 2 12.001 2C17.5238 2 22.001 6.47715 22.001 12C22.001 17.5228 17.5238 22 12.001 22C10.1671 22 8.44851 21.5064 6.97086 20.6447L2.00516 22ZM8.39232 7.30833C8.5262 7.29892 8.66053 7.29748 8.79459 7.30402C8.84875 7.30758 8.90265 7.31384 8.95659 7.32007C9.11585 7.33846 9.29098 7.43545 9.34986 7.56894C9.64818 8.24536 9.93764 8.92565 10.2182 9.60963C10.2801 9.76062 10.2428 9.95633 10.125 10.1457C10.0652 10.2428 9.97128 10.379 9.86248 10.5183C9.74939 10.663 9.50599 10.9291 9.50599 10.9291C9.50599 10.9291 9.40738 11.0473 9.44455 11.1944C9.45903 11.25 9.50521 11.331 9.54708 11.3991C9.57027 11.4368 9.5918 11.4705 9.60577 11.4938C9.86169 11.9211 10.2057 12.3543 10.6259 12.7616C10.7463 12.8783 10.8631 12.9974 10.9887 13.108C11.457 13.5209 11.9868 13.8583 12.559 14.1082L12.5641 14.1105C12.6486 14.1469 12.692 14.1668 12.8157 14.2193C12.8781 14.2457 12.9419 14.2685 13.0074 14.2858C13.0311 14.292 13.0554 14.2955 13.0798 14.2972C13.2415 14.3069 13.335 14.2032 13.3749 14.1555C14.0984 13.279 14.1646 13.2218 14.1696 13.2222V13.2238C14.2647 13.1236 14.4142 13.0888 14.5476 13.097C14.6085 13.1007 14.6691 13.1124 14.7245 13.1377C15.2563 13.3803 16.1258 13.7587 16.1258 13.7587L16.7073 14.0201C16.8047 14.0671 16.8936 14.1778 16.8979 14.2854C16.9005 14.3523 16.9077 14.4603 16.8838 14.6579C16.8525 14.9166 16.7738 15.2281 16.6956 15.3913C16.6406 15.5058 16.5694 15.6074 16.4866 15.6934C16.3743 15.81 16.2909 15.8808 16.1559 15.9814C16.0737 16.0426 16.0311 16.0714 16.0311 16.0714C15.8922 16.159 15.8139 16.2028 15.6484 16.2909C15.391 16.428 15.1066 16.5068 14.8153 16.5218C14.6296 16.5313 14.4444 16.5447 14.2589 16.5347C14.2507 16.5342 13.6907 16.4482 13.6907 16.4482C12.2688 16.0742 10.9538 15.3736 9.85034 14.402C9.62473 14.2034 9.4155 13.9885 9.20194 13.7759C8.31288 12.8908 7.63982 11.9364 7.23169 11.0336C7.03043 10.5884 6.90299 10.1116 6.90098 9.62098C6.89729 9.01405 7.09599 8.4232 7.46569 7.94186C7.53857 7.84697 7.60774 7.74855 7.72709 7.63586C7.85348 7.51651 7.93392 7.45244 8.02057 7.40811C8.13607 7.34902 8.26293 7.31742 8.39232 7.30833Z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="linkdin">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path
+                            d="M4.00098 3H20.001C20.5533 3 21.001 3.44772 21.001 4V20C21.001 20.5523 20.5533 21 20.001 21H4.00098C3.44869 21 3.00098 20.5523 3.00098 20V4C3.00098 3.44772 3.44869 3 4.00098 3ZM5.00098 5V19H19.001V5H5.00098ZM7.50098 9C6.67255 9 6.00098 8.32843 6.00098 7.5C6.00098 6.67157 6.67255 6 7.50098 6C8.3294 6 9.00098 6.67157 9.00098 7.5C9.00098 8.32843 8.3294 9 7.50098 9ZM6.50098 10H8.50098V17.5H6.50098V10ZM12.001 10.4295C12.5854 9.86534 13.2665 9.5 14.001 9.5C16.072 9.5 17.501 11.1789 17.501 13.25V17.5H15.501V13.25C15.501 12.2835 14.7175 11.5 13.751 11.5C12.7845 11.5 12.001 12.2835 12.001 13.25V17.5H10.001V10H12.001V10.4295Z">
+                        </path>
+                    </svg>
+                </div>
+
+                <div class="closeBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path
+                            d="M10.5859 12L2.79297 4.20706L4.20718 2.79285L12.0001 10.5857L19.793 2.79285L21.2072 4.20706L13.4143 12L21.2072 19.7928L19.793 21.2071L12.0001 13.4142L4.20718 21.2071L2.79297 19.7928L10.5859 12Z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="headerMain">
+            <div class="headerLeft">
+                <div class="links">
+                    <h2><a href="#hero">Home</a></h2>
+                    <h2><a href="">About</a></h2>
+                    <h2><a href="">Work</a></h2>
+                    <h2><a href="">Stack</a></h2>
+                </div>
+            </div>
+            <div class="headerRight">
+                <div class="rightLinks">
+                    <p><a href="">umer78f@gmail.com</a></p>
+                    <p><a href="">+923041690678</a></p>
+                    <p><a href="">POSTAL CODE: 6300</a></p>
+                    <p><a href="">Pakistan BWP</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="headerBtm">
+            <h1 class="animWrapper">UMAR&nbsp;FAROOQ</h1>
+        </div>
+    </header>
+
+    <div class="main">
+        <div class="nav">
+            <div class="logo">
+                <h5>UF.</h5>
+            </div>
+            <div class="online-tag">
+                <span class="ping-dot"></span>
+                <span class="status-text">Available for work</span>
+            </div>
+            <div class="bar">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
+        <div id="hero" class="hero">
+            <div class="heroSubtitle">
+                <div class="subwrapper">
+                    <p>Motion-driven web</p>
+                </div>
+                <div class="subwrapper">
+                    <p>experiences and Layouts.</p>
+                </div>
+            </div>
+            <div class="heroTitle">
+                <div class="h1Wrapper">
+                    <h1>Scroll</h1>
+                </div>
+                <div class="revealDiv">
+                    <div class="h1Wrapper">
+                        <h1>Rev</h1>
+                    </div>
+                    <div class="videoDiv">
+                        <video autoplay loop muted src="/assets/videos/heroVideo.mp4"></video>
+                    </div>
+                    <div class="h1Wrapper">
+                        <h1>eal</h1>
+                    </div>
+                </div>
+                <div class="h1Wrapper">
+                    <h1>Explore</h1>
+                </div>
+            </div>
+            <div class="heroRightSubtitle">
+                <div class="subwrapper">
+                    <p>Frontend Developer</p>
+                </div>
+                <div class="subwrapper">
+                    <p>UI/UX Designer</p>
+                </div>
+            </div>
+            <div class="marqueeWrapper">
+                <div class="marqueeTrack">
+                    <div class="marqueeContent">
+                        <span class="skillPill">HTML5</span>
+                        <span class="skillPill">CSS3</span>
+                        <span class="skillPill">JavaScript</span>
+                        <span class="skillPill">GSAP</span>
+                        <span class="skillPill">ScrollTrigger</span>
+                        <span class="skillPill">Locomotive</span>
+                        <span class="skillPill">Lenis</span>
+                        <span class="skillPill">Tailwind CSS</span>
+                        <span class="skillPill">React</span>
+                        <span class="skillPill">Redux</span>
+                        <span class="skillPill">Photoshop</span>
+                        <span class="skillPill">Figma</span>
+                    </div>
+                    <!-- Duplicate set for seamless infinite loop -->
+                    <div class="marqueeContent" aria-hidden="true">
+                        <span class="skillPill">HTML5</span>
+                        <span class="skillPill">CSS3</span>
+                        <span class="skillPill">JavaScript</span>
+                        <span class="skillPill">Tailwind CSS</span>
+                        <span class="skillPill">React</span>
+                        <span class="skillPill">GSAP</span>
+                        <span class="skillPill">ScrollTrigger</span>
+                        <span class="skillPill">Locomotive</span>
+                        <span class="skillPill">Lenis</span>
+                        <span class="skillPill">Redux</span>
+                        <span class="skillPill">Photoshop</span>
+                        <span class="skillPill">Figma</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sideRail sideRail--right">
+                <a href="mailto:hello@yourdomain.com" class="railEmail">UMER78F@GMAIL.COM</a>
+                <div class="railLine"></div>
+                <span class="railLabel">© 2026</span>
+            </div>
+            <div class="heroBtm">
+                <div class="heroTime"></div>
+
+                <div class="scroll-arrow">
+                    <svg width="20" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="whyMe">
+            <div class="title">
+                <h1 class="animText">ADAPTIVE</h1>
+            </div>
+            <div class="openingText">
+                <p class="animText">Developer with AI speed, grounded in strong foundational knowledge delivering
+                    seamless, custom-coded web experiences that perform as impeccably as they look.</p>
+            </div>
+            <div class="profileImage">
+                <img src="/assets/images/profile.webp" alt="">
+            </div>
+        </div>
+        <div class="expertiseTitle">
+            <h1 class="animText">EXPERTISE</h1>
+        </div>
+        <div class="expertiese">
+            <div class="expertCards">
+                <div id="expertCard4" class="expertCard">
+                    <div id="left">
+                        <div class="cardLeft">
+                            <h2 class="mblCardNmbr">04</h2>
+                            <h3 class="cardHeading">Web<br>Animation</h3>
+                            <p class="cardDesc">Bringing interfaces to life with scroll-driven storytelling and
+                                cinematic transitions.</p>
+                            <div class="cardTags">
+                                <span class="tag">GSAP</span>
+                                <span class="tag">ScrollTrigger</span>
+                                <span class="tag">Micro-interactions</span>
+                                <span class="tag">Motion Design</span>
+                                <span class="tag">Svg Animation</span>
+                                <span class="tag">Text Animation</span>
+
+                            </div>
+                            <ul class="cardPointsMbl">
+                                <li>Scroll-based storytelling</li>
+                                <li>Timeline choreography</li>
+                                <li>Page transitions</li>
+                                <li>Performance-first motion</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="right">
+                        <div class="cardRight">
+                            <span class="cardNumber">04</span>
+                            <ul class="cardPoints">
+                                <li>Scroll-based storytelling</li>
+                                <li>Timeline choreography</li>
+                                <li>Page transitions</li>
+                                <li>Performance-first motion</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="expertCard3" class="expertCard">
+                    <div id="left">
+                        <div class="cardLeft">
+                            <h2 class="mblCardNmbr">03</h2>
+                            <h3 class="cardHeading">React<br>Ecosystem</h3>
+                            <p class="cardDesc">Building component-driven applications with React and modern tooling
+                                scalable, testable, built to evolve.</p>
+                            <div class="cardTags">
+                                <span class="tag">React</span>
+                                <span class="tag">Vite</span>
+                                <span class="tag">Redux</span>
+                                <span class="tag">Hooks</span>
+                                <span class="tag">Performence</span>
+                            </div>
+                            <ul class="cardPointsMbl">
+                                <li>Reusable components</li>
+                                <li>Global state management</li>
+                                <li>SSR & static generation</li>
+                                <li>Custom hooks architecture</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="right">
+                        <div class="cardRight">
+                            <span class="cardNumber">03</span>
+                            <ul class="cardPoints">
+                                <li>Reusable components</li>
+                                <li>Global state management</li>
+                                <li>SSR & static generation</li>
+                                <li>Custom hooks architecture</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="expertCard2" class="expertCard">
+                    <div id="left">
+                        <div class="cardLeft">
+                            <h2 class="mblCardNmbr">02</h2>
+                            <h3 class="cardHeading">Frontend<br>Developer</h3>
+                            <p class="cardDesc">Turning designs into fast, resilient interfaces with clean code and
+                                performance built in from the start.</p>
+                            <div class="cardTags">
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">TypeScript</span>
+                                <span class="tag">Responsive UI</span>
+                                <span class="tag">Performance</span>
+                            </div>
+                             <ul class="cardPointsMbl">
+                                <li>Pixel-perfect implementation</li>
+                                <li>Reusable UI architecture</li>
+                                <li>Cross-browser reliability</li>
+                                <li>Speed & optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="right">
+                        <div class="cardRight">
+                            <span class="cardNumber">02</span>
+                            <ul class="cardPoints">
+                                <li>Pixel-perfect implementation</li>
+                                <li>Reusable UI architecture</li>
+                                <li>Cross-browser reliability</li>
+                                <li>Speed & optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="expertCard1" class="expertCard">
+                    <div id="left">
+                        <div class="cardLeft">
+                            <h2 class="mblCardNmbr">01</h2>
+                            <h3 class="cardHeading">Web<br>Designer</h3>
+                            <p class="cardDesc">Shaping interfaces around clarity and intent where every layout, type
+                                choice and color decision earns its place.</p>
+                            <div class="cardTags">
+                                <span class="tag">UI Design</span>
+                                <span class="tag">Prototyping</span>
+                                <span class="tag">Design Systems</span>
+                                <span class="tag">Visual Identity</span>
+                                <span class="tag">Design Pshycology</span>
+                            </div>
+                            <ul class="cardPointsMbl">
+                                <li>Wireframing & prototyping</li>
+                                <li>Design systems at scale</li>
+                                <li>Brand-consistent UI</li>
+                                <li>User-centered layouts</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="right">
+                        <div class="cardRight">
+                            <span class="cardNumber">01</span>
+                            <ul class="cardPoints">
+                                <li>Wireframing & prototyping</li>
+                                <li>Design systems at scale</li>
+                                <li>Brand-consistent UI</li>
+                                <li>User-centered layouts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="workTitle">
+            <h1 class="animText">Work</h1>
+        </div>
+
+        <div class="work">
+            <div class="workContainer">
+                <!-- LEFT WORK DISPLAY -->
+                <div class="leftWork">
+                    <div class="workVideo">
+                        <video id="activeVideo" muted loop autoplay src="/assets/videos/work-video2.mp4"></video>
+                    </div>
+
+                    <div class="tagsDiv" id="tagsContainer">
+                        <div class="tag">Html/Css</div>
+                        <div class="tag">Javascript</div>
+                        <div class="tag">Gsap</div>
+                        <div class="tag">LocoMotive</div>
+                    </div>
+
+                    <div class="metaDiv">
+                        <div>
+                            <h2 id="projectTitle">Frontend Man</h2>
+                            <p id="projectDesc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum sit,
+                                repellendus assumenda illum voluptatem distinctio.</p>
+                        </div>
+
+                        <div class="linkBtn">
+                            <a id="projectLink" href="#" target="_blank" rel="noopener noreferrer">View Work </a>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V11H19L18.9999 6.413L11.2071 14.2071L9.79289 12.7929L17.5849 5H13V3H21Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT WORK LIST -->
+                <div class="rightWork">
+                    <div class="proName proItem active">
+                        <h1>01</h1>
+                        <h1>Frontend Man</h1>
+                    </div>
+
+                    <div class="proName proItem">
+                        <h1>02</h1>
+                        <h1>Significo</h1>
+                    </div>
+
+                    <div class="proName proItem">
+                        <h1>03</h1>
+                        <h1>K72</h1>
+                    </div>
+                    <div class="proName proItem">
+                        <h1>04</h1>
+                        <h1>Aj Publishing</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact">
+            <div class="contactLinks">
+                <a href="">
+                    <p>Whatsapp</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path
+                            d="M7.25361 18.4944L7.97834 18.917C9.18909 19.623 10.5651 20 12.001 20C16.4193 20 20.001 16.4183 20.001 12C20.001 7.58172 16.4193 4 12.001 4C7.5827 4 4.00098 7.58172 4.00098 12C4.00098 13.4363 4.37821 14.8128 5.08466 16.0238L5.50704 16.7478L4.85355 19.1494L7.25361 18.4944ZM2.00516 22L3.35712 17.0315C2.49494 15.5536 2.00098 13.8345 2.00098 12C2.00098 6.47715 6.47813 2 12.001 2C17.5238 2 22.001 6.47715 22.001 12C22.001 17.5228 17.5238 22 12.001 22C10.1671 22 8.44851 21.5064 6.97086 20.6447L2.00516 22ZM8.39232 7.30833C8.5262 7.29892 8.66053 7.29748 8.79459 7.30402C8.84875 7.30758 8.90265 7.31384 8.95659 7.32007C9.11585 7.33846 9.29098 7.43545 9.34986 7.56894C9.64818 8.24536 9.93764 8.92565 10.2182 9.60963C10.2801 9.76062 10.2428 9.95633 10.125 10.1457C10.0652 10.2428 9.97128 10.379 9.86248 10.5183C9.74939 10.663 9.50599 10.9291 9.50599 10.9291C9.50599 10.9291 9.40738 11.0473 9.44455 11.1944C9.45903 11.25 9.50521 11.331 9.54708 11.3991C9.57027 11.4368 9.5918 11.4705 9.60577 11.4938C9.86169 11.9211 10.2057 12.3543 10.6259 12.7616C10.7463 12.8783 10.8631 12.9974 10.9887 13.108C11.457 13.5209 11.9868 13.8583 12.559 14.1082L12.5641 14.1105C12.6486 14.1469 12.692 14.1668 12.8157 14.2193C12.8781 14.2457 12.9419 14.2685 13.0074 14.2858C13.0311 14.292 13.0554 14.2955 13.0798 14.2972C13.2415 14.3069 13.335 14.2032 13.3749 14.1555C14.0984 13.279 14.1646 13.2218 14.1696 13.2222V13.2238C14.2647 13.1236 14.4142 13.0888 14.5476 13.097C14.6085 13.1007 14.6691 13.1124 14.7245 13.1377C15.2563 13.3803 16.1258 13.7587 16.1258 13.7587L16.7073 14.0201C16.8047 14.0671 16.8936 14.1778 16.8979 14.2854C16.9005 14.3523 16.9077 14.4603 16.8838 14.6579C16.8525 14.9166 16.7738 15.2281 16.6956 15.3913C16.6406 15.5058 16.5694 15.6074 16.4866 15.6934C16.3743 15.81 16.2909 15.8808 16.1559 15.9814C16.0737 16.0426 16.0311 16.0714 16.0311 16.0714C15.8922 16.159 15.8139 16.2028 15.6484 16.2909C15.391 16.428 15.1066 16.5068 14.8153 16.5218C14.6296 16.5313 14.4444 16.5447 14.2589 16.5347C14.2507 16.5342 13.6907 16.4482 13.6907 16.4482C12.2688 16.0742 10.9538 15.3736 9.85034 14.402C9.62473 14.2034 9.4155 13.9885 9.20194 13.7759C8.31288 12.8908 7.63982 11.9364 7.23169 11.0336C7.03043 10.5884 6.90299 10.1116 6.90098 9.62098C6.89729 9.01405 7.09599 8.4232 7.46569 7.94186C7.53857 7.84697 7.60774 7.74855 7.72709 7.63586C7.85348 7.51651 7.93392 7.45244 8.02057 7.40811C8.13607 7.34902 8.26293 7.31742 8.39232 7.30833Z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="">
+                    <p>LinkdIn</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path
+                            d="M4.00098 3H20.001C20.5533 3 21.001 3.44772 21.001 4V20C21.001 20.5523 20.5533 21 20.001 21H4.00098C3.44869 21 3.00098 20.5523 3.00098 20V4C3.00098 3.44772 3.44869 3 4.00098 3ZM5.00098 5V19H19.001V5H5.00098ZM7.50098 9C6.67255 9 6.00098 8.32843 6.00098 7.5C6.00098 6.67157 6.67255 6 7.50098 6C8.3294 6 9.00098 6.67157 9.00098 7.5C9.00098 8.32843 8.3294 9 7.50098 9ZM6.50098 10H8.50098V17.5H6.50098V10ZM12.001 10.4295C12.5854 9.86534 13.2665 9.5 14.001 9.5C16.072 9.5 17.501 11.1789 17.501 13.25V17.5H15.501V13.25C15.501 12.2835 14.7175 11.5 13.751 11.5C12.7845 11.5 12.001 12.2835 12.001 13.25V17.5H10.001V10H12.001V10.4295Z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="">
+                    <p>Facebook</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M13 9H17.5L17 11H13V20H11V11H7V9H11V7.12777C11 5.34473 11.1857 4.69816 11.5343 4.04631C11.8829 3.39446 12.3945 2.88288 13.0463 2.53427C13.6982 2.18565 14.3447 2 16.1278 2C16.6498 2 17.1072 2.05 17.5 2.15V4H16.1278C14.8041 4 14.401 4.07784 13.9895 4.29789C13.6862 4.46011 13.4601 4.68619 13.2979 4.98951C13.0778 5.40096 13 5.80407 13 7.12777V9Z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="">
+                    <p>GitHub</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"></path></svg>
+                </a>
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <!-- Top Row: Compact CTA & Quick Links -->
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <p class="cta-mini">Got a vision? Let's build it.</p>
+                        <a href="mailto:umer78f@gmail.com" class="footer-email-link">
+                            umer78f@gmail.com
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.7781L10.8076 18.3639L16.1716 12.9999H4V10.9999H16.1716Z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="footer-links-group">
+                        <nav class="footer-nav">
+                            <span class="nav-label">Navigation</span>
+                            <a href="#hero">Home</a>
+                            <a href="#whyMe">About</a>
+                            <a href="#work">Work</a>
+                        </nav>
+
+                        <nav class="footer-nav">
+                            <span class="nav-label">Socials</span>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+                            <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                            <a href="https://wa.me/923041690678" target="_blank" rel="noopener">WhatsApp</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Bottom Row: Integrated Compact Branding -->
+                <div class="footer-bottom">
+                    <span class="location-badge">Bahawalpur, PK</span>
+                    <h1 class="brand-text">UMAR FAROOQ</h1>
+                    <span class="copyright">&copy; 2026</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+
+    <script src="script.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

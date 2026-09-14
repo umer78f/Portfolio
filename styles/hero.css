@@ -1,0 +1,395 @@
+/* ==========================================================================
+   HERO SECTION - GPU ACCELERATED
+   ========================================================================== */
+
+.hero {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    height: calc(100svh - 86px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.heroTitle {
+    width: 100%;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.h1Wrapper {
+    overflow: hidden;
+}
+
+.heroTitle h1 {
+    font-size: clamp(3.5rem, 14vw, 7rem);
+    font-weight: 500;
+    color: var(--arsenic);
+    line-height: 0.8;
+    letter-spacing: -0.7vh;
+    text-transform: uppercase;
+    margin: 0 5px;
+    transform: translate3d(0, 100%, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.revealDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+}
+
+/* Hardware-Accelerated Video Pill (Replaces clip-path variable lag) */
+.videoDiv {
+    max-width: 14vw;
+    height: clamp(2rem, 8vw, 6rem);
+    border-radius: 1em;
+    overflow: hidden;
+    flex-shrink: 0;
+    opacity: 0;
+    margin: 0 0.2em;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+
+.videoDiv video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Subtitles */
+.heroSubtitle {
+    height: 60px;
+    overflow: hidden;
+    position: absolute;
+    left: 4vw;
+    top: 20%;
+}
+
+.heroRightSubtitle {
+    overflow: hidden;
+    position: absolute;
+    right: 8vw;
+    bottom: 40%;
+}
+
+.heroSubtitle p,
+.heroRightSubtitle p {
+    max-width: 420px;
+    font-size: clamp(0.95rem, 1.3vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: rgba(31, 31, 31, 0.87);
+    letter-spacing: -0.01em;
+    text-align: left;
+    margin: 0;
+    border-radius: 3em;
+    text-transform: capitalize;
+    transform: translate3d(0, -100%, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Status Badges & Dynamic Indicators */
+.online-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(20, 21, 22, 0.7);
+    letter-spacing: 0.02em;
+}
+
+.ping-dot {
+    position: relative;
+    display: flex;
+    width: 8px;
+    height: 8px;
+}
+
+.ping-dot::before,
+.ping-dot::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #22c55e;
+    border-radius: 50%;
+}
+
+.ping-dot::before {
+    animation: ripple 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ripple {
+
+    75%,
+    100% {
+        transform: scale(2.4);
+        opacity: 0;
+    }
+}
+
+/* Side Rails & Decorative Navigation */
+.sideRail {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    z-index: 2;
+    opacity: 0;
+    will-change: opacity;
+}
+
+.sideRail--right {
+    right: 2em;
+}
+
+.railLine {
+    width: 1px;
+    height: 60px;
+    background-color: rgba(31, 31, 31, 0.87);
+}
+
+.railLink,
+.railEmail,
+.railLabel {
+    writing-mode: vertical-rl;
+    color: rgba(31, 31, 31, 0.87);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.sideRail--left .railLink,
+.railLabel {
+    transform: rotate(180deg);
+}
+
+.sideLinks {
+    height: fit-content;
+    position: absolute;
+    left: 2em;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 3vw;
+    cursor: pointer;
+}
+
+.sideLinks h1 a {
+    text-decoration: none;
+    font-size: clamp(2rem, 6vw, 3rem);
+    color: rgba(95, 95, 95, 0.664);
+    font-weight: lighter;
+}
+
+/* Bottom Controls */
+.heroBtm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 2em;
+    opacity: 0;
+    will-change: opacity;
+}
+
+.heroTime {
+    width: 20%;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(20, 21, 22, 0.6);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.scroll-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12rem;
+    padding: 0.3em;
+    border: 1px solid currentColor;
+    border-radius: 6em;
+    color: rgba(20, 21, 22, 0.6);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.scroll-arrow svg {
+    animation: arrowBounce 2s ease-in-out infinite;
+}
+
+@keyframes arrowBounce {
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(0, 6px, 0);
+    }
+}
+
+/* Infinite Marquee Section */
+.marqueeWrapper {
+    opacity: 0;
+    width: 70%;
+    overflow: hidden;
+    padding: 3rem 0;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+
+.marqueeTrack {
+    display: flex;
+    width: max-content;
+    user-select: none;
+    will-change: transform;
+}
+
+.marqueeContent {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 1rem;
+    animation: scrollLeft 25s linear infinite;
+    will-change: transform;
+}
+
+.marqueeWrapper:hover .marqueeContent {
+    animation-play-state: paused;
+}
+
+.skillPill {
+    font-family: monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(20, 21, 22, 0.95);
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.skillPill:hover {
+    background: rgba(20, 21, 22, 0.08);
+    border-color: rgba(20, 21, 22, 0.25);
+    color: #141516;
+}
+
+@keyframes scrollLeft {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+/* ==========================================================================
+   HERO MOBILE RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+
+@media (max-width: 900px) {
+    .marqueeWrapper {
+        width: 90%;
+    }
+}
+
+@media (max-width: 860px) {
+    .heroTitle {
+        margin-top: 15vw;
+    }
+
+    .heroTitle h1 {
+        font-size: clamp(2rem, 8vw, 7rem);
+    }
+
+    .marqueeContent {
+        margin-top: 8vw;
+    }
+
+    .videoDiv {
+        height: 10vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        gap: 1em;
+        justify-content: space-between;
+    }
+
+    .heroTitle {
+        margin: 0;
+        padding: 0;
+    }
+
+    .heroTitle h1 {
+        font-size: 14vw;
+        letter-spacing: -0.1vh;
+    }
+
+    .videoDiv {
+        max-width: 30vw;
+        height: clamp(3rem, 13vw, 4rem);
+        border-radius: 10px;
+    }
+
+    .heroSubtitle,
+    .heroRightSubtitle {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 8vh;
+    }
+
+    .hero p {
+        text-align: center;
+    }
+
+    .marqueeWrapper,
+    .marqueeContent {
+        padding: 0;
+        margin: 0;
+    }
+
+    .skillPill {
+        padding: 0.3em 1em;
+    }
+
+    .online-tag {
+        font-size: 3vw;
+    }
+
+    .scroll-arrow {
+        margin-left: 0;
+    }
+
+    .heroTime {
+        width: 80%;
+    }
+}

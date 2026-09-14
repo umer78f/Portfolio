@@ -1,0 +1,131 @@
+/* ==========================================================================
+   WHY ME SECTION - COMPLETE RESPONSIVE & MIX-BLEND-MODE STYLES
+   ========================================================================== */
+:root {
+    --imgOverlay: 1;
+}
+
+.whyMe {
+    width: 100%;
+    height: 100vh;
+    max-width: 1440px;
+    padding: 2em;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    /* Explicit background color is required for difference blending to resolve to black */
+    background-color: var(--white);
+    isolation: isolate;
+    /* Creates a clean root stacking context for CSS blending */
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Animated Title Styles
+   -------------------------------------------------------------------------- */
+
+.title {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+    mix-blend-mode: difference;
+    padding-top: 10px;
+
+}
+
+.title::-webkit-scrollbar {
+    display: none;
+}
+
+.title h1 {
+    font-size: clamp(3.5rem, 18vw, 8rem);
+    text-align: center;
+    font-weight: 500;
+    font-family: bebas, sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+    mix-blend-mode: difference;
+    color: white;
+}
+
+/* --------------------------------------------------------------------------
+   2. Opening Paragraph Styles
+   -------------------------------------------------------------------------- */
+
+.openingText {
+    max-width: 900px;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 5;
+    /* Higher than images so it blends on top of them */
+    pointer-events: none;
+    mix-blend-mode: difference;
+
+
+}
+
+.openingText p {
+    font-size: clamp(1.4rem, 6vw, 3rem);
+    margin: 0;
+    color: rgb(226, 226, 226);
+    font-weight: 300;
+
+}
+
+.animText span {
+    display: inline-block;
+}
+
+.profileImage {
+    position: absolute;
+    left: 8%;
+    bottom: 1%;
+    height: 400px;
+    width: 300px;
+
+}
+
+.profileImage img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.profileImage::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+    transform: scaleY(var(--imgOverlay));
+    transform-origin: top;
+}
+
+
+@media (max-width: 920px) {
+    .openingText p {
+        font-size: 5vw;
+        margin-top: 2vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .whyMe {
+        padding: 1em;
+    }
+
+    .openingText {
+        width: 92%;
+        top: 25%;
+    }
+
+    .openingText p {
+        font-size: 7.5vw;
+        margin-top: 2vw;
+    }
+}
