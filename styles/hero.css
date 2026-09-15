@@ -6,13 +6,15 @@
     position: relative;
     width: 100%;
     max-width: 1440px;
-    height: calc(100svh - 86px);
+    height: 88svh;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
+    contain: layout paint style;
+    
 }
 
 .heroTitle {
@@ -391,5 +393,13 @@
 
     .heroTime {
         width: 80%;
+    }
+}
+@media (max-width: 600px) {
+    /* Reduce layer compositing load during scroll */
+    .marqueeContent {
+        animation: none; /* Pause continuous animation on small touch screens */
+        padding: 0;
+        margin: 0;
     }
 }

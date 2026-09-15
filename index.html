@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="styles/work.css">
     <link rel="stylesheet" href="styles/whyMe.css">
     <link rel="stylesheet" href="styles/expertise.css">
+    <link rel="stylesheet" href="styles/preloader.css">
     <link rel="stylesheet" href="styles/footer.css">
     <title>Umar.</title>
 
@@ -23,6 +24,21 @@
 </head>
 
 <body>
+    <!-- PRELOADER -->
+<div class="preloader">
+    <div class="loader-content">
+        <div class="loader-title">
+            <span>UF.</span>
+            <span>PORTFOLIO</span>
+        </div>
+        <div class="loader-progress">
+            <span id="loader-percent">0</span><span>%</span>
+        </div>
+    </div>
+    <div class="loader-bar-bg">
+        <div class="loader-bar" id="loader-bar"></div>
+    </div>
+</div>
     <header>
         <div class="navHeader">
             <div class="logoContainer">
@@ -117,7 +133,7 @@
                         <h1>Rev</h1>
                     </div>
                     <div class="videoDiv">
-                        <video autoplay loop muted src="/assets/videos/heroVideo.mp4"></video>
+                        <video playsinline preload="metadata" autoplay loop muted src="/assets/videos/heroVideo.mp4"></video>
                     </div>
                     <div class="h1Wrapper">
                         <h1>eal</h1>
@@ -355,7 +371,7 @@
                 <!-- LEFT WORK DISPLAY -->
                 <div class="leftWork">
                     <div class="workVideo">
-                        <video id="activeVideo" muted loop autoplay src="/assets/videos/work-video2.mp4"></video>
+                        <video id="activeVideo" playsinline preload="metadata" muted loop autoplay src="/assets/videos/work-video2.mp4"></video>
                     </div>
 
                     <div class="tagsDiv" id="tagsContainer">
@@ -409,7 +425,7 @@
 
         <div class="contact">
             <div class="contactLinks">
-                 <a href="">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                     <p>Facebook</p>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path
@@ -417,7 +433,8 @@
                         </path>
                     </svg>
                 </a>
-                <a href="">
+
+                <a href="https://wa.me/923041690678" target="_blank" rel="noopener noreferrer">
                     <p>Whatsapp</p>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
                         <path
@@ -425,16 +442,17 @@
                         </path>
                     </svg>
                 </a>
-                <a href="">
-                    <p>LinkdIn</p>
+
+                <a href="https://www.linkedin.com/in/umar-farooq-337058321/" target="_blank" rel="noopener noreferrer">
+                    <p>LinkedIn</p>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
                         <path
                             d="M4.00098 3H20.001C20.5533 3 21.001 3.44772 21.001 4V20C21.001 20.5523 20.5533 21 20.001 21H4.00098C3.44869 21 3.00098 20.5523 3.00098 20V4C3.00098 3.44772 3.44869 3 4.00098 3ZM5.00098 5V19H19.001V5H5.00098ZM7.50098 9C6.67255 9 6.00098 8.32843 6.00098 7.5C6.00098 6.67157 6.67255 6 7.50098 6C8.3294 6 9.00098 6.67157 9.00098 7.5C9.00098 8.32843 8.3294 9 7.50098 9ZM6.50098 10H8.50098V17.5H6.50098V10ZM12.001 10.4295C12.5854 9.86534 13.2665 9.5 14.001 9.5C16.072 9.5 17.501 11.1789 17.501 13.25V17.5H15.501V13.25C15.501 12.2835 14.7175 11.5 13.751 11.5C12.7845 11.5 12.001 12.2835 12.001 13.25V17.5H10.001V10H12.001V10.4295Z">
                         </path>
                     </svg>
                 </a>
-               
-                <a href="">
+
+                <a href="https://github.com/umer78f" target="_blank" rel="noopener noreferrer">
                     <p>GitHub</p>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path

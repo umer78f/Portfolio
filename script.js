@@ -1,5 +1,12 @@
+// Replace LocomotiveScroll initialization in script.js
+const isMobile = window.innerWidth <= 768;
+
 const locomotiveScroll = new LocomotiveScroll({
     scrollCallback: () => ScrollTrigger.update(),
+    smooth: !isMobile, // Disable smooth scroll engine on mobile to use native hardware scrolling
+    lenisOptions: {
+        smoothTouch: false
+    }
 });
 
 //------------------------------------------------------------------------------------------------
@@ -132,7 +139,9 @@ function heroAnimation() {
         });
     }
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({
+        delay:0.4
+    });
 
     // Animate H1 titles with GPU acceleration
     tl.to('.h1Wrapper h1, .revealDiv h1', {
@@ -263,7 +272,7 @@ function workAnimation() {
             title: "Aj Publishing",
             desc: "A high-performance branding platform featuring scroll-driven physics, dynamic cursor interactions, and responsive layouts.",
             tags: ["html/css", "gsap", "Lenis", "CSS Modules"],
-            video: "/assets/videos/toggle.mp4", 
+            video: "/assets/videos/toggle.mp4",
             link: "#"
         }
     ];
@@ -428,9 +437,9 @@ function expertiseAnimation() {
                 trigger: ".expertiese",
                 start: "top top",
                 end: "+=1000",
-                scrub: 1.5,
+                scrub: 1,
                 pin: true,
-                anticipatePin: 0.1,
+                anticipatePin: 0.5,
             }
         });
 
@@ -487,29 +496,126 @@ function expertiseAnimation() {
 
 //------------------------------------------------------------------------------------------------
 
+// Preloader Asset Manager
+// Preloader Asset Manager (Fixed)
+function initPreloader() {
+    return new Promise((resolve) => {
+        const percentText = document.getElementById("loader-percent");
+        const progressBar = document.getElementById("loader-bar");
 
+        // 1. Collect all images and custom fonts
+        const images = Array.from(document.images);
+        const imageSources = images.map((img) => img.src).filter(Boolean);
 
-document.addEventListener("DOMContentLoaded", () => {
+        let loadedCount = 0;
+        const totalResources = imageSources.length + 1; // +1 for document.fonts
+        let currentProgress = 0;
+
+        // Smoothly animate the loader UI counter
+        const updateProgress = (targetProgress) => {
+            gsap.to({ val: currentProgress }, {
+                val: targetProgress,
+                duration: 1,
+                ease: "power1.out",
+                onUpdate: function () {
+                    currentProgress = Math.floor(this.targets()[0].val);
+                    if (percentText) percentText.textContent = currentProgress;
+                    if (progressBar) gsap.set(progressBar, { scaleX: currentProgress / 100 });
+                },
+                onComplete: () => {
+                    if (targetProgress >= 100) {
+                        resolve();
+                    }
+                }
+            });
+        };
+
+        const onItemLoaded = () => {
+            loadedCount++;
+            if (loadedCount >= totalResources) {
+                // Force complete 100% push once all media items are resolved
+                updateProgress(100);
+            } else {
+                const progress = Math.floor((loadedCount / totalResources) * 99);
+                updateProgress(progress);
+            }
+        };
+
+        // 2. Preload Fonts
+        document.fonts.ready.then(onItemLoaded).catch(onItemLoaded);
+
+        // 3. Preload Images
+        if (imageSources.length === 0) {
+            onItemLoaded();
+        } else {
+            imageSources.forEach((src) => {
+                const img = new Image();
+                img.onload = onItemLoaded;
+                img.onerror = onItemLoaded; // Prevent broken images from hanging preloader
+                img.src = src;
+            });
+        }
+    });
+}
+// Awwwards Reveal Animation
+function exitPreloader() {
+    const tl = gsap.timeline();
+
+    tl.to(".loader-content, .loader-bar-bg", {
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.out"
+    })
+        .to(".preloader", {
+            clipPath: "polygon(0 0, 100% 0, 100% 0%, 0 0%)",
+            duration: 1.2,
+            ease: "expo.inOut"
+        })
+        .set(".preloader", { display: "none" });
+
+    return tl;
+}
+// Pause any <video> once it's off-screen, resume when it's back — keeps only the
+// visible video decoding at any time instead of every video running simultaneously.
+function manageVideoVisibility() {
+    const videos = document.querySelectorAll('video');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.play().catch(() => {});
+            } else {
+                entry.target.pause();
+            }
+        });
+    }, { threshold: 0.1 });
+
+    videos.forEach((v) => io.observe(v));
+}
+
+// Updated DOM Load Sequence
+// Updated DOM Load Sequence
+document.addEventListener("DOMContentLoaded", async () => {
     initScrollProxy();
     h1Animation();
     headerAnimation();
-    heroAnimation();
-    whyMeAnimation();
-    expertiseAnimation()
-    workAnimation();
-    footerAnimation()
-    ScrollTrigger.refresh();
-});
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        locomotiveScroll.resize();
-        ScrollTrigger.refresh();
-    }, 200);
-});
 
-window.addEventListener("load", () => {
+    // 1. Wait for assets to finish loading
+    await initPreloader();
+
+    // 2. Pre-calculate layout dimensions BEFORE animating out to eliminate UI thread pauses
     locomotiveScroll.resize();
     ScrollTrigger.refresh();
+
+    // 3. Play Exit Animation and Hero Reveal smoothly
+    const exitTl = exitPreloader();
+
+    // Trigger hero animations right as the preloader clip-path wipes open
+    gsap.delayedCall(0.3, () => {
+        manageVideoVisibility() 
+        heroAnimation();
+        whyMeAnimation();
+        expertiseAnimation();
+        workAnimation();
+        footerAnimation();
+    });
 });
