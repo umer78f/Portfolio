@@ -1,23 +1,50 @@
-// Replace LocomotiveScroll initialization in script.js
-const isMobile = window.innerWidth <= 768;
+// Hardware & Mobile Detection
+const isMobile = window.matchMedia("(max-width: 768px), (pointer: coarse)").matches;
 
-const locomotiveScroll = new LocomotiveScroll({
-    scrollCallback: () => ScrollTrigger.update(),
-    smooth: !isMobile, // Disable smooth scroll engine on mobile to use native hardware scrolling
-    lenisOptions: {
-        smoothTouch: false
+ScrollTrigger.config({ ignoreMobileResize: true });
+
+let lenis = null;
+
+// Smooth Scroll Setup (Lenis + GSAP Sync)
+function setupSmoothScroll() {
+    if (isMobile) {
+        ScrollTrigger.normalizeScroll(true);
+        return;
     }
-});
 
-//------------------------------------------------------------------------------------------------
+    // Initialize Lenis
+    lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothTouch: false,
+    });
 
-function initScrollProxy() {
-    ScrollTrigger.refresh();
+    // Synchronize Lenis scroll updates with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Add Lenis's requestAnimationFrame to GSAP's ticker for perfectly synced frames
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+
+    // Disable GSAP ticker lag smoothing to prevent stutter after heavy background tasks
+    gsap.ticker.lagSmoothing(0);
 }
 
-//------------------------------------------------------------------------------------------------
+// Debounced Window Resize Recalculation
+let resizeTimeout;
+function debouncedRefresh() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        if (lenis) lenis.resize();
+        ScrollTrigger.refresh();
+    }, 200);
+}
 
+window.addEventListener("resize", debouncedRefresh, { passive: true });
+window.addEventListener("orientationchange", debouncedRefresh, { passive: true });
 
+// Split Text Animation Utility
 function h1Animation() {
     const paragraphs = document.querySelectorAll('.animText, .animWrapper');
     paragraphs.forEach(p => {
@@ -34,7 +61,7 @@ function h1Animation() {
             const wordSpan = document.createElement('span');
             wordSpan.className = 'word';
 
-            for (let char of word) {
+            for (const char of word) {
                 const charSpan = document.createElement('span');
                 charSpan.textContent = char;
                 wordSpan.appendChild(charSpan);
@@ -51,8 +78,7 @@ function h1Animation() {
     });
 }
 
-//------------------------------------------------------------------------------------------------
-
+// Header Menu Animation
 function headerAnimation() {
     const closeBtn = document.querySelector('.closeBtn');
     const openBtn = document.querySelector('.bar');
@@ -65,85 +91,101 @@ function headerAnimation() {
     const rightLinksA = gsap.utils.toArray('.rightLinks p a');
     const headerBtmSpans = gsap.utils.toArray('.headerBtm h1 span span');
 
+    gsap.set([...socialsSvg, ...linksH2a, ...rightLinksA, ...navH4, ...headerBtmSpans], {
+        force3D: true,
+        willChange: "transform, opacity"
+    });
+
     const tl = gsap.timeline({ paused: true });
 
     tl.to(header, {
         '--header-clip': '150%',
-        duration: 1,
-        ease: 'power2.inOut',
+        duration: 0.8,
+        ease: 'power3.inOut',
     })
-        .from(socialsSvg, {
-            y: -100,
-            stagger: -0.05,
-            ease: 'power2.inOut',
-        }, "-=0.3")
-        .from(navH4, {
-            x: "100%",
-            duration: 0.7,
-            ease: "expo.out"
-        }, 'linksGroup')
-        .from(linksH2a, {
-            y: '-100%',
-            duration: 0.7,
-            stagger: 0.07,
-            ease: 'power2.out',
-        }, 'linksGroup')
-        .from(rightLinksA, {
-            y: '-130%',
-            duration: 0.7,
-            stagger: 0.07,
-            ease: 'power2.out',
-        }, 'linksGroup')
-        .from(headerBtmSpans, {
-            y: "-140%",
-            duration: 2.5,
-            ease: "elastic.out(1, 0.3)",
-            stagger: {
-                each: 0.02,
-                from: "center"
-            },
+    .from(socialsSvg, {
+        y: -100,
+        stagger: -0.04,
+        ease: 'power2.inOut',
+        force3D: true
+    }, "-=0.3")
+    .from(navH4, {
+        x: "100%",
+        duration: 0.6,
+        ease: "power3.out",
+        force3D: true
+    }, 'linksGroup')
+    .from(linksH2a, {
+        y: '-100%',
+        duration: 0.6,
+        stagger: 0.05,
+        ease: 'power2.out',
+        force3D: true
+    }, 'linksGroup')
+    .from(rightLinksA, {
+        y: '-130%',
+        duration: 0.6,
+        stagger: 0.05,
+        ease: 'power2.out',
+        force3D: true
+    }, 'linksGroup')
+    .from(headerBtmSpans, {
+        y: "-140%",
+        duration: 1.8,
+        ease: "elastic.out(1, 0.4)",
+        stagger: {
+            each: 0.02,
+            from: "center"
+        },
+        force3D: true
+    });
+
+    openBtn.addEventListener('click', () => {
+        if (lenis) lenis.stop(); // Stop scrolling when menu is open
+        tl.play();
+    });
+
+    closeBtn.addEventListener('click', () => {
+        const closeTl = gsap.timeline({
+            onComplete: () => {
+                tl.pause(0);
+                if (lenis) lenis.start(); // Resume scrolling when menu closes
+            }
         });
 
-    openBtn.addEventListener('click', () => tl.play());
-    closeBtn.addEventListener('click', () => {
-        gsap.to([...linksH2a, ...rightLinksA, ...socialsSvg], {
+        closeTl.to([...linksH2a, ...rightLinksA, ...socialsSvg], {
             y: (index, target) => {
                 if (target.matches('.socials div svg')) return -100;
                 if (target.matches('.rightLinks p a')) return '-130%';
                 return '-100%';
             },
-            duration: 0.4,
-            ease: 'power2.in'
-        });
-
-        gsap.to(header, {
+            duration: 0.35,
+            stagger: 0.02,
+            ease: 'power3.in',
+            force3D: true
+        })
+        .to(header, {
             '--header-clip': '0%',
-            duration: 0.5,
-            ease: 'power2.inOut',
-            onComplete: () => tl.pause(0)
-        });
+            duration: 0.45,
+            ease: 'expo.inOut',
+        }, "-=0.25");
     });
 }
 
-//------------------------------------------------------------------------------------------------
-
-
+// Hero Section Animation
 function heroAnimation() {
     const videoDiv = document.querySelector('.videoDiv');
 
     if (videoDiv) {
-        // Use transform scaleX for GPU acceleration instead of clip-path rendering
         gsap.set(videoDiv, {
             scaleX: 0,
-            transformOrigin: "center center"
+            transformOrigin: "center center",
+            force3D: true,
         });
     }
 
-    const tl = gsap.timeline({
-        delay:0.4
-    });
+    const tl = gsap.timeline({ delay: 0.2 });
 
-    // Animate H1 titles with GPU acceleration
     tl.to('.h1Wrapper h1, .revealDiv h1', {
         opacity: 1,
         y: "0%",
@@ -168,31 +210,29 @@ function heroAnimation() {
         duration: 1.5,
         force3D: true
     }, '1.5')
-        .to('.heroSubtitle p, .heroRightSubtitle p', {
-            y: "0%",
-            stagger: 0.1,
-            duration: 1,
-            ease: "power2.out",
-            force3D: true
-        }, '-=1.5');
+    .to('.heroSubtitle p, .heroRightSubtitle p', {
+        y: "0%",
+        stagger: 0.1,
+        duration: 1,
+        ease: "power2.out",
+        force3D: true
+    }, '-=1.5');
 
     return tl;
 }
 
-//------------------------------------------------------------------------------------------------
-
-
+// "Why Me" Section Animation
 function whyMeAnimation() {
     const headerBtmH1 = document.querySelector('.headerBtm h1');
     if (headerBtmH1) headerBtmH1.classList.remove('animText');
 
     gsap.set(".title", { perspective: 1000 });
 
-    const animTextSpans = gsap.utils.toArray(".whyMe .animText span span");
-
-
     const titleSpans = gsap.utils.toArray('.title h1 span span');
     const openingTextSpans = gsap.utils.toArray('.openingText p span span');
+    const profileImage = document.querySelector('.profileImage');
+
+    const willChangeTargets = [...titleSpans, ...openingTextSpans, profileImage].filter(Boolean);
 
     const tl = gsap.timeline({
         scrollTrigger: {
@@ -202,6 +242,11 @@ function whyMeAnimation() {
             pin: true,
             scrub: 1.4,
             anticipatePin: 0.05,
+            invalidateOnRefresh: true,
+            onEnter: () => gsap.set(willChangeTargets, { willChange: "transform, opacity" }),
+            onLeave: () => gsap.set(willChangeTargets, { willChange: "auto" }),
+            onEnterBack: () => gsap.set(willChangeTargets, { willChange: "transform, opacity" }),
+            onLeaveBack: () => gsap.set(willChangeTargets, { willChange: "auto" }),
         },
     });
 
@@ -209,31 +254,33 @@ function whyMeAnimation() {
         y: "100%",
         duration: 2,
         ease: "expo.out",
+        force3D: true,
         stagger: {
             each: 0.05,
             from: "center"
         }
     })
-        .from(openingTextSpans, {
-            opacity: 0,
-            y: 20, // Optional slight vertical lift for cleaner text reveal
-            stagger: 0.07,
-            duration: 0.5,
-            ease: "power2.out"
-        }, 'whymeimg').to('.profileImage', {
-            "--imgOverlay": 0,
-            duration: 3,
-        }, 'whymeimg')
+    .from(openingTextSpans, {
+        opacity: 0,
+        y: 20,
+        stagger: 0.07,
+        duration: 0.5,
+        ease: "power2.out",
+        force3D: true,
+    }, 'whymeimg')
+    .to('.profileImage', {
+        "--imgOverlay": 0,
+        duration: 3,
+    }, 'whymeimg');
 
     return tl;
 }
 
-//------------------------------------------------------------------------------------------------
-
-
+// Work Section Switcher
 function workAnimation() {
     gsap.to('.workTitle h1 span', {
         y: 0,
+        force3D: true,
         stagger: {
             each: 0.05,
             from: "start"
@@ -250,7 +297,7 @@ function workAnimation() {
         {
             title: "Frontend Man",
             desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum sit, repellendus assumenda illum voluptatem distinctio.",
-            tags: ["Html/Css", "Javascript", "Gsap", "LocoMotive"],
+            tags: ["Html/Css", "Javascript", "Gsap", "Lenis"],
             video: "/assets/videos/work-video2.mp4",
             link: "#"
         },
@@ -300,7 +347,7 @@ function workAnimation() {
             const targetData = projectsData[index];
 
             const tl = gsap.timeline({
-                defaults: { ease: "power4.inOut" },
+                defaults: { ease: "power4.inOut", force3D: true },
                 onComplete: () => { isAnimating = false; }
             });
 
@@ -310,70 +357,69 @@ function workAnimation() {
                 duration: 0.3,
                 stagger: 0.04
             })
-                .to(tagsContainer.children, {
-                    y: -10,
-                    opacity: 0,
-                    duration: 0.25,
-                    stagger: 0.02
-                }, "<")
-                .to(videoElem, {
-                    scale: 1.05,
-                    opacity: 0.2,
-                    duration: 0.35
-                }, "<")
-                .add(() => {
-                    titleElem.textContent = targetData.title;
-                    descElem.textContent = targetData.desc;
-                    if (targetData.link && linkElem) linkElem.setAttribute("href", targetData.link);
+            .to(tagsContainer.children, {
+                y: -10,
+                opacity: 0,
+                duration: 0.25,
+                stagger: 0.02
+            }, "<")
+            .to(videoElem, {
+                scale: 1.05,
+                opacity: 0.2,
+                duration: 0.35
+            }, "<")
+            .add(() => {
+                titleElem.textContent = targetData.title;
+                descElem.textContent = targetData.desc;
+                if (targetData.link && linkElem) linkElem.setAttribute("href", targetData.link);
 
-                    tagsContainer.innerHTML = targetData.tags
-                        .map((tag) => `<div class="tag">${tag}</div>`)
-                        .join("");
+                tagsContainer.innerHTML = targetData.tags
+                    .map((tag) => `<div class="tag">${tag}</div>`)
+                    .join("");
 
-                    videoElem.src = targetData.video;
-                    videoElem.load();
-                    videoElem.play().catch(() => { });
-                })
-                .set([titleElem, descElem], { y: 15, opacity: 0 })
-                .set(tagsContainer.children, { y: 10, opacity: 0 })
-                .to(videoElem, {
-                    scale: 1,
-                    opacity: 1,
-                    duration: 0.55,
-                    ease: "power3.out"
-                })
-                .to([titleElem, descElem], {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.45,
-                    stagger: 0.06,
-                    ease: "power3.out"
-                }, "-=0.35")
-                .to(tagsContainer.children, {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.35,
-                    stagger: 0.03,
-                    ease: "power2.out"
-                }, "-=0.3");
+                videoElem.src = targetData.video;
+                videoElem.load();
+                videoElem.play().catch(() => { });
+            })
+            .set([titleElem, descElem], { y: 15, opacity: 0 })
+            .set(tagsContainer.children, { y: 10, opacity: 0 })
+            .to(videoElem, {
+                scale: 1,
+                opacity: 1,
+                duration: 0.55,
+                ease: "power3.out"
+            })
+            .to([titleElem, descElem], {
+                y: 0,
+                opacity: 1,
+                duration: 0.45,
+                stagger: 0.06,
+                ease: "power3.out"
+            }, "-=0.35")
+            .to(tagsContainer.children, {
+                y: 0,
+                opacity: 1,
+                duration: 0.35,
+                stagger: 0.03,
+                ease: "power2.out"
+            }, "-=0.3");
         });
     });
 }
 
-//------------------------------------------------------------------------------------------------
-
-
+// Footer Animation
 function footerAnimation() {
-    let tl = gsap.timeline({
+    const tl = gsap.timeline({
         scrollTrigger: {
             trigger: "footer",
             start: "top 55%",
         }
-    })
+    });
     tl.from(".footerBtm h1 span", {
         y: "-100%",
         duration: 2.5,
         ease: "elastic.out(1, 0.3)",
+        force3D: true,
         stagger: {
             each: 0.02,
             from: "center"
@@ -381,11 +427,10 @@ function footerAnimation() {
     });
 }
 
-//------------------------------------------------------------------------------------------------
-
-
+// Expertise Animation
 function expertiseAnimation() {
-    let mm = gsap.matchMedia();
+    const mm = gsap.matchMedia();
+
     mm.add("(min-width: 800px)", () => {
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -395,6 +440,7 @@ function expertiseAnimation() {
                 scrub: 1.5,
                 pin: true,
                 anticipatePin: 0.05,
+                invalidateOnRefresh: true,
             }
         });
 
@@ -403,19 +449,14 @@ function expertiseAnimation() {
         cardIds.forEach((id, i) => {
             const label = `card${i}`;
 
-            // 1. scale the incoming card up to full size
             tl.to(id, {
                 scale: 1,
                 duration: 2,
-                ease: "Power2.inOut"
-            }, label)
-
-
-
-            // 3. ...then split the doors open, slightly overlapping the fade's tail
+                ease: "Power2.inOut",
+                force3D: true,
+            }, label);
 
             if (id !== "#expertCard4") {
-                // 2. fade the inner text out first...
                 tl.to(`${id} .cardLeft, ${id} .cardRight`, {
                     opacity: 0,
                     duration: 1.2,
@@ -425,10 +466,10 @@ function expertiseAnimation() {
                     scaleX: 0,
                     duration: 2,
                     ease: "Power2.inOut",
+                    force3D: true,
                 }, `${label}+=1`);
             }
         });
-
     });
 
     mm.add("(max-width: 600px)", () => {
@@ -440,6 +481,11 @@ function expertiseAnimation() {
                 scrub: 1,
                 pin: true,
                 anticipatePin: 0.5,
+                invalidateOnRefresh: true,
+                onEnter: () => gsap.set("#expertCard1, #expertCard2, #expertCard3", { willChange: "transform, opacity" }),
+                onLeave: () => gsap.set("#expertCard1, #expertCard2, #expertCard3", { willChange: "auto" }),
+                onEnterBack: () => gsap.set("#expertCard1, #expertCard2, #expertCard3", { willChange: "transform, opacity" }),
+                onLeaveBack: () => gsap.set("#expertCard1, #expertCard2, #expertCard3", { willChange: "auto" }),
             }
         });
 
@@ -448,35 +494,32 @@ function expertiseAnimation() {
         cardIds.forEach((id, i) => {
             const label = `card${i}`;
 
-            // 1. scale the incoming card up to full size
             tl.to(id, {
                 scale: 1,
                 duration: 2,
-                ease: "Power2.inOut"
-            }, label)
+                ease: "Power2.inOut",
+                force3D: true,
+            }, label);
 
-            // 2. fade the inner text out first...
             tl.to(`${id} .cardLeft, ${id} .cardRight`, {
                 opacity: 0,
                 duration: 1.2,
                 ease: "Power1.inOut",
             }, `${label}+=0.6`);
 
-            // 3. ...then split the doors open, slightly overlapping the fade's tail
-
             tl.to(`${id} #left`, {
-                tranformOrigin: "right",
+                transformOrigin: "right",
                 scaleX: 0,
                 duration: 4,
                 ease: "Power2.inOut",
+                force3D: true,
             }, `${label}+=1`);
         });
-
     });
-
 
     gsap.to('.expertiseTitle h1 span', {
         y: 0,
+        force3D: true,
         stagger: {
             each: 0.04,
             from: "center"
@@ -490,42 +533,33 @@ function expertiseAnimation() {
             scrub: 1
         }
     });
-
-
 }
 
-//------------------------------------------------------------------------------------------------
-
-// Preloader Asset Manager
-// Preloader Asset Manager (Fixed)
+// Preloader Progress Manager
 function initPreloader() {
     return new Promise((resolve) => {
         const percentText = document.getElementById("loader-percent");
         const progressBar = document.getElementById("loader-bar");
 
-        // 1. Collect all images and custom fonts
         const images = Array.from(document.images);
         const imageSources = images.map((img) => img.src).filter(Boolean);
 
         let loadedCount = 0;
-        const totalResources = imageSources.length + 1; // +1 for document.fonts
+        const totalResources = imageSources.length + 1;
         let currentProgress = 0;
 
-        // Smoothly animate the loader UI counter
         const updateProgress = (targetProgress) => {
             gsap.to({ val: currentProgress }, {
                 val: targetProgress,
-                duration: 1,
+                duration: 0.8,
                 ease: "power1.out",
                 onUpdate: function () {
                     currentProgress = Math.floor(this.targets()[0].val);
                     if (percentText) percentText.textContent = currentProgress;
-                    if (progressBar) gsap.set(progressBar, { scaleX: currentProgress / 100 });
+                    if (progressBar) gsap.set(progressBar, { scaleX: currentProgress / 100, force3D: true });
                 },
                 onComplete: () => {
-                    if (targetProgress >= 100) {
-                        resolve();
-                    }
+                    if (targetProgress >= 100) resolve();
                 }
             });
         };
@@ -533,89 +567,114 @@ function initPreloader() {
         const onItemLoaded = () => {
             loadedCount++;
             if (loadedCount >= totalResources) {
-                // Force complete 100% push once all media items are resolved
                 updateProgress(100);
             } else {
-                const progress = Math.floor((loadedCount / totalResources) * 99);
-                updateProgress(progress);
+                updateProgress(Math.floor((loadedCount / totalResources) * 99));
             }
         };
 
-        // 2. Preload Fonts
         document.fonts.ready.then(onItemLoaded).catch(onItemLoaded);
 
-        // 3. Preload Images
         if (imageSources.length === 0) {
             onItemLoaded();
         } else {
             imageSources.forEach((src) => {
                 const img = new Image();
                 img.onload = onItemLoaded;
-                img.onerror = onItemLoaded; // Prevent broken images from hanging preloader
+                img.onerror = onItemLoaded;
                 img.src = src;
             });
         }
     });
 }
-// Awwwards Reveal Animation
+
+// Exit Preloader
 function exitPreloader() {
     const tl = gsap.timeline();
 
+    gsap.set(".preloader", { pointerEvents: "none" });
+    gsap.set(".preloader, .loader-content, .loader-bar-bg", {
+        force3D: true,
+        willChange: "transform, opacity, clip-path"
+    });
+
     tl.to(".loader-content, .loader-bar-bg", {
         opacity: 0,
-        duration: 0.5,
-        ease: "power2.out"
+        y: -15,
+        duration: 0.3,
+        ease: "power2.in"
     })
-        .to(".preloader", {
-            clipPath: "polygon(0 0, 100% 0, 100% 0%, 0 0%)",
-            duration: 1.2,
-            ease: "expo.inOut"
-        })
-        .set(".preloader", { display: "none" });
+    .to(".preloader", {
+        clipPath: "polygon(0 0, 100% 0, 100% 0%, 0 0%)",
+        duration: 0.75,
+        ease: "power4.inOut",
+        force3D: true,
+    }, "-=0.1")
+    .set(".preloader", { 
+        display: "none",
+        willChange: "auto"
+    });
 
     return tl;
 }
-// Pause any <video> once it's off-screen, resume when it's back — keeps only the
-// visible video decoding at any time instead of every video running simultaneously.
+
+// Video Observer
 function manageVideoVisibility() {
     const videos = document.querySelectorAll('video');
     const io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                entry.target.play().catch(() => {});
+                entry.target.play().catch(() => { });
             } else {
                 entry.target.pause();
             }
         });
     }, { threshold: 0.1 });
 
-    videos.forEach((v) => io.observe(v));
+    videos.forEach((v) => {
+        io.observe(v);
+        if (v.readyState < 1) {
+            v.addEventListener("loadedmetadata", () => {
+                if (lenis) lenis.resize();
+                ScrollTrigger.refresh();
+            }, { once: true });
+        }
+    });
 }
 
-// Updated DOM Load Sequence
-// Updated DOM Load Sequence
+function initScrollAnimations() {
+    manageVideoVisibility();
+    heroAnimation();
+    whyMeAnimation();
+    expertiseAnimation();
+    workAnimation();
+    footerAnimation();
+}
+
+// Lifecycle Execution
 document.addEventListener("DOMContentLoaded", async () => {
-    initScrollProxy();
+    setupSmoothScroll();
     h1Animation();
     headerAnimation();
 
-    // 1. Wait for assets to finish loading
-    await initPreloader();
+    try {
+        await initPreloader();
+    } catch (err) {
+        console.warn("Preloader wait failed, continuing anyway:", err);
+    }
 
-    // 2. Pre-calculate layout dimensions BEFORE animating out to eliminate UI thread pauses
-    locomotiveScroll.resize();
-    ScrollTrigger.refresh();
-
-    // 3. Play Exit Animation and Hero Reveal smoothly
     const exitTl = exitPreloader();
 
-    // Trigger hero animations right as the preloader clip-path wipes open
-    gsap.delayedCall(0.3, () => {
-        manageVideoVisibility() 
-        heroAnimation();
-        whyMeAnimation();
-        expertiseAnimation();
-        workAnimation();
-        footerAnimation();
+    gsap.delayedCall(0.2, () => {
+        try {
+            initScrollAnimations();
+        } catch (err) {
+            console.warn("Scroll animation init failed:", err);
+        }
+    });
+
+    exitTl.eventCallback("onComplete", () => {
+        if (lenis) lenis.resize();
+        ScrollTrigger.refresh();
     });
 });
