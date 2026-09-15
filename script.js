@@ -5,29 +5,25 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 
 let lenis = null;
 
-// Smooth Scroll Setup (Lenis + GSAP Sync)
+// Smooth Scroll Setup (Lenis + GSAP Sync with Native Mobile Smooth Touch)
 function setupSmoothScroll() {
-    if (isMobile) {
-        ScrollTrigger.normalizeScroll(true);
-        return;
-    }
-
-    // Initialize Lenis
     lenis = new Lenis({
-        duration: 1.2,
+        duration: isMobile ? 0.9 : 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothTouch: false,
+        smoothWheel: true,
+        smoothTouch: true,
+        touchMultiplier: 1.5,
     });
 
     // Synchronize Lenis scroll updates with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
-    // Add Lenis's requestAnimationFrame to GSAP's ticker for perfectly synced frames
+    // Add Lenis's requestAnimationFrame to GSAP's ticker for synchronized frames
     gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
+        if (lenis) lenis.raf(time * 1000);
     });
 
-    // Disable GSAP ticker lag smoothing to prevent stutter after heavy background tasks
+    // Disable GSAP ticker lag smoothing to prevent scroll stutter
     gsap.ticker.lagSmoothing(0);
 }
 
@@ -141,7 +137,7 @@ function headerAnimation() {
     });
 
     openBtn.addEventListener('click', () => {
-        if (lenis) lenis.stop(); // Stop scrolling when menu is open
+        if (lenis) lenis.stop();
         tl.play();
     });
 
@@ -149,7 +145,7 @@ function headerAnimation() {
         const closeTl = gsap.timeline({
             onComplete: () => {
                 tl.pause(0);
-                if (lenis) lenis.start(); // Resume scrolling when menu closes
+                if (lenis) lenis.start();
             }
         });
 
@@ -176,31 +172,21 @@ function headerAnimation() {
 function heroAnimation() {
     const videoDiv = document.querySelector('.videoDiv');
 
-    if (videoDiv) {
-        gsap.set(videoDiv, {
-            scaleX: 0,
-            transformOrigin: "center center",
-            force3D: true,
-        });
-    }
-
-    const tl = gsap.timeline({ delay: 0.2 });
+    const tl = gsap.timeline({ delay: 0.5 });
 
     tl.to('.h1Wrapper h1, .revealDiv h1', {
         opacity: 1,
         y: "0%",
-        duration: 1.8,
+        duration: 1.5,
         ease: "expo.inOut",
-        force3D: true
     });
 
     if (videoDiv) {
         tl.to(videoDiv, {
             scaleX: 1,
             opacity: 1,
-            duration: 1.4,
+            duration: 2,
             ease: "expo.inOut",
-            force3D: true
         }, "-=1");
     }
 
@@ -242,11 +228,6 @@ function whyMeAnimation() {
             pin: true,
             scrub: 1.4,
             anticipatePin: 0.05,
-            invalidateOnRefresh: true,
-            onEnter: () => gsap.set(willChangeTargets, { willChange: "transform, opacity" }),
-            onLeave: () => gsap.set(willChangeTargets, { willChange: "auto" }),
-            onEnterBack: () => gsap.set(willChangeTargets, { willChange: "transform, opacity" }),
-            onLeaveBack: () => gsap.set(willChangeTargets, { willChange: "auto" }),
         },
     });
 
@@ -494,13 +475,6 @@ function expertiseAnimation() {
         cardIds.forEach((id, i) => {
             const label = `card${i}`;
 
-            tl.to(id, {
-                scale: 1,
-                duration: 2,
-                ease: "Power2.inOut",
-                force3D: true,
-            }, label);
-
             tl.to(`${id} .cardLeft, ${id} .cardRight`, {
                 opacity: 0,
                 duration: 1.2,
@@ -508,7 +482,7 @@ function expertiseAnimation() {
             }, `${label}+=0.6`);
 
             tl.to(`${id} #left`, {
-                transformOrigin: "right",
+                transformOrigin: "left",
                 scaleX: 0,
                 duration: 4,
                 ease: "Power2.inOut",
@@ -600,17 +574,16 @@ function exitPreloader() {
 
     tl.to(".loader-content, .loader-bar-bg", {
         opacity: 0,
-        y: -15,
         duration: 0.3,
-        ease: "power2.in"
+        ease: "power2.out"
     })
     .to(".preloader", {
         clipPath: "polygon(0 0, 100% 0, 100% 0%, 0 0%)",
-        duration: 0.75,
+        duration: 1.5,
         ease: "power4.inOut",
         force3D: true,
     }, "-=0.1")
-    .set(".preloader", { 
+    .set(".preloader", {
         display: "none",
         willChange: "auto"
     });
@@ -648,7 +621,6 @@ function initScrollAnimations() {
     whyMeAnimation();
     expertiseAnimation();
     workAnimation();
-    footerAnimation();
 }
 
 // Lifecycle Execution

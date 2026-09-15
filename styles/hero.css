@@ -56,8 +56,8 @@
     flex-shrink: 0;
     opacity: 0;
     margin: 0 0.2em;
-    will-change: transform, opacity;
-    transform: translateZ(0);
+    transform: scaleX(0);
+
 }
 
 .videoDiv video {
