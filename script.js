@@ -8,7 +8,7 @@ let lenis = null;
 // Smooth Scroll Setup (Lenis + GSAP Sync with Native Mobile Smooth Touch)
 function setupSmoothScroll() {
     lenis = new Lenis({
-        duration: isMobile ? 0.7 : 1.5,
+        duration: isMobile ? 1.5 : 1.5,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         smoothTouch: true,
