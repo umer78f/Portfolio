@@ -418,7 +418,7 @@ function expertiseAnimation() {
                 trigger: ".expertiese",
                 start: "top top",
                 end: "+=3000",
-                scrub: 1.5,
+                scrub: 2,
                 pin: true,
                 anticipatePin: 0.05,
                 invalidateOnRefresh: true,
@@ -435,7 +435,7 @@ function expertiseAnimation() {
                 duration: 2,
                 ease: "Power2.inOut",
                 force3D: true,
-            }, label);
+            });
 
             if (id !== "#expertCard4") {
                 tl.to(`${id} .cardLeft, ${id} .cardRight`, {
