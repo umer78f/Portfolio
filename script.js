@@ -279,14 +279,14 @@ function workAnimation() {
             title: "Frontend Man",
             desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum sit, repellendus assumenda illum voluptatem distinctio.",
             tags: ["Html/Css", "Javascript", "Gsap", "Lenis"],
-            video: "/assets/videos/work-video2.mp4",
+            video: "/assets/videos/frontendCrafty.mp4",
             link: "#"
         },
         {
             title: "Significo",
             desc: "Revolutionizing healthcare visual identity with interactive canvas animations, dynamic WebGL shaders, and fluid transitions.",
             tags: ["React", "Three.js", "GSAP", "Tailwind"],
-            video: "/assets/videos/homeVideo.mp4",
+            video: "/assets/videos/significo.mp4",
             link: "#"
         },
         {
@@ -298,10 +298,10 @@ function workAnimation() {
         },
         {
             title: "Aj Publishing",
-            desc: "A high-performance branding platform featuring scroll-driven physics, dynamic cursor interactions, and responsive layouts.",
+            desc: "A professional business landing page and service platform built for a Kindle publishing agency, featuring responsive layouts, custom pricing tiers, portfolio showcases, and a client consultation system.",
             tags: ["html/css", "gsap", "Lenis", "CSS Modules"],
-            video: "/assets/videos/toggle.mp4",
-            link: "#"
+            video: "/assets/videos/ajpublishings.mp4",
+            link: "https://ajpublishinghub.netlify.app/"
         }
     ];
 
