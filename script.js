@@ -387,27 +387,6 @@ function workAnimation() {
         });
     });
 }
-
-// Footer Animation
-function footerAnimation() {
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: "footer",
-            start: "top 55%",
-        }
-    });
-    tl.from(".footerBtm h1 span", {
-        y: "-100%",
-        duration: 2.5,
-        ease: "elastic.out(1, 0.3)",
-        force3D: true,
-        stagger: {
-            each: 0.02,
-            from: "center"
-        },
-    });
-}
-
 // Expertise Animation
 function expertiseAnimation() {
     const mm = gsap.matchMedia();
@@ -461,7 +440,7 @@ function expertiseAnimation() {
                 end: "+=1000",
                 scrub: 1,
                 pin: true,
-                anticipatePin: 0.5,
+                anticipatePin: 0.05,
                 invalidateOnRefresh: true,
                 onEnter: () => gsap.set("#expertCard1, #expertCard2, #expertCard3", { willChange: "transform, opacity" }),
                 onLeave: () => gsap.set("#expertCard1, #expertCard2, #expertCard3", { willChange: "auto" }),
