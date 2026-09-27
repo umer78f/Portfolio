@@ -280,7 +280,7 @@ function workAnimation() {
             desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum sit, repellendus assumenda illum voluptatem distinctio.",
             tags: ["Html/Css", "Javascript", "Gsap", "Lenis"],
             video: "/assets/videos/frontendCrafty.mp4",
-            link: "#"
+            link: "https://frontend-crafty.vercel.app/"
         },
         {
             title: "Significo",
