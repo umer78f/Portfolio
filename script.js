@@ -277,7 +277,7 @@ function workAnimation() {
     const projectsData = [
         {
             title: "Frontend Man",
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum sit, repellendus assumenda illum voluptatem distinctio.",
+            desc: "Cloned a Awwwards winning site including almost all of the animations",
             tags: ["Html/Css", "Javascript", "Gsap", "Lenis"],
             video: "/assets/videos/frontendCrafty.mp4",
             link: "https://frontend-crafty.vercel.app/"
